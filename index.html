@@ -2,672 +2,1397 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SmartVente — Punto de venta con IA para restaurantes | Colombia</title>
-<meta name="description" content="El POS para restaurantes que lee las facturas de tus proveedores con una foto, te dice dónde estás perdiendo plata y te muestra tus ventas en el celular. Facturación electrónica DIAN integrada. Hecho en Colombia.">
-<meta property="og:title" content="SmartVente — Tu restaurante, bajo control. Desde el celular.">
-<meta property="og:description" content="Facturas de proveedor con una foto, costo real por plato, comparación de precios y ventas en tiempo real.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SmartVente · El POS que te dice dónde pierdes plata</title>
+<meta name="description" content="POS para restaurantes en Colombia: facturación DIAN, comandas, inventario y el costo real de cada plato con una foto a la factura. Pide tu demo por WhatsApp.">
+<link rel="canonical" href="https://www.smartvente.co/">
+<meta property="og:title" content="SmartVente — Un POS que te dice dónde pierdes plata">
+<meta property="og:description" content="Facturación DIAN, comandas, inventario y el costo real de cada plato con una foto a la factura del proveedor. Para restaurantes en Colombia.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.smartvente.co/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%238b5cf6'/%3E%3Ccircle cx='50' cy='50' r='9' fill='%231e0a3c'/%3E%3C/svg%3E">
+<meta property="og:image" content="https://www.smartvente.co/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_CO">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0d0d12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 146 146'%3E%3Crect width='146' height='146' rx='16' fill='%239B5BFF'/%3E%3Cg fill='none'%3E%3Cellipse cx='73' cy='73' rx='54' ry='21.5' stroke='%230d0d0d' stroke-opacity='0.4' stroke-width='3'/%3E%3Cellipse cx='73' cy='73' rx='21.5' ry='54' stroke='%230d0d0d' stroke-opacity='0.4' stroke-width='3'/%3E%3Ccircle cx='73' cy='73' r='8' stroke='%230d0d0d' stroke-width='9'/%3E%3C/g%3E%3Ccircle cx='73' cy='19' r='8' fill='%230d0d0d'/%3E%3Ccircle cx='127' cy='73' r='8' fill='%230d0d0d'/%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/marca/icono-360.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ---------- Tokens ---------- */
   :root {
-    --bg: #0b0a10; --bg2: #121019; --card: #16131f; --line: rgba(255,255,255,.08); --line2: rgba(139,92,246,.35);
-    --ink: #f4f2fb; --mute: #a1a1b5; --dim: #6b6b80;
-    --purple: #8b5cf6; --purple-d: #7c3aed; --purple-l: #c4b5fd; --orange: #f97316; --green: #22c55e;
+    /* Paleta derivada del logo: morado #9b5bff sobre #1e0a3c */
+    /* Paleta: los dos colores del logo oficial (#9B5BFF y #0d0d0d) y neutros casi puros */
+    --papel: #f6f5f8;       /* fondo claro, neutro con un pelo de morado */
+    --papel2: #ecebf1;      /* superficie, un paso de tono */
+    --papel3: #dddbe5;
+    --tinta: #0d0d12;       /* el negro del logo: texto y fondo oscuro */
+    --tinta2: #5b5670;      /* texto secundario (6,4:1 sobre papel) */
+    --tinta-sobre-oscuro: #f6f5f8;
+    --tinta2-sobre-oscuro: #b9b4c9;
+    --oscuro2: #17151f;     /* superficie sobre oscuro */
+    --verde: #7332e6;       /* la acción sobre claro: el morado del logo llevado a AA (6,3:1 con blanco) */
+    --verde-h: #6128c7;
+    --verde-campo: #efe8ff; /* campo de color del acento */
+    --verde-claro: #c4a8ff; /* la acción sobre oscuro (9,6:1 con la tinta) */
+    --logo: #9b5bff;        /* el morado exacto del logo */
+    --plata: #146f37;       /* verde: solo para dinero y positivos dentro de las pantallas (AA sobre #dcf3e4) */
+    --naranja: #ff5a2a;     /* naranja rojizo de la página original: etiquetas, selección y el segundo satélite */
+    --naranja-tinta: #c23a14; /* naranja sobre claro (5,7:1 con blanco; 4,6:1 sobre papel) */
+    --naranja-campo: #ffe8df;
+    --rojo: #b3261e;        /* semántico: alerta en pantallas */
+    --display: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --texto: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+    --ancho: 1160px;
+    --margen: 24px;
+    --t-fast: 140ms;
+    --t-med: 240ms;
+    --ease: cubic-bezier(.2, .8, .2, 1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--ink); font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { background: var(--papel); color: var(--tinta); font-family: var(--texto); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+  ::selection { background: var(--verde); color: #fff; }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-  section { padding: 96px 0; position: relative; }
-  .eyebrow { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--purple-l); font-weight: 600; }
-  .h2 { font-size: clamp(30px, 4.2vw, 46px); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; margin-top: 14px; }
-  .lead { color: var(--mute); font-size: 17px; max-width: 640px; margin-top: 16px; }
-  .center { text-align: center; } .center .lead { margin-left: auto; margin-right: auto; }
-  .hl { color: var(--purple); } .or { color: var(--orange); }
+  a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--verde); outline-offset: 3px; border-radius: 2px; }
+  img, svg { max-width: 100%; display: block; }
+  .wrap { max-width: var(--ancho); margin: 0 auto; padding: 0 var(--margen); }
+  section { padding: 112px 0; }
+  @media (max-width: 760px) { section { padding: 72px 0; } .btn { font-size: 16px; padding: 16px 18px; } }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  /* Botones */
-  .btn { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; border-radius: 12px; padding: 14px 24px; font-size: 15px; transition: transform .15s, box-shadow .15s, background .15s; }
-  .btn-primary { background: linear-gradient(135deg, var(--purple), var(--purple-d)); color: #fff; box-shadow: 0 10px 30px rgba(124,58,237,.35); }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 36px rgba(124,58,237,.5); }
-  .btn-ghost { border: 1px solid var(--line); color: var(--mute); }
-  .btn-ghost:hover { color: var(--ink); border-color: var(--line2); }
+  /* ---------- Tipografía ---------- */
+  h1, h2, h3, .display { font-family: var(--display); font-weight: 800; letter-spacing: -.03em; line-height: 1.06; text-wrap: balance; }
+  h1 { font-size: clamp(34px, 5.2vw, 66px); letter-spacing: -.035em; }
+  h2 { font-size: clamp(30px, 4vw, 50px); }
+  h3 { font-size: clamp(26px, 3vw, 38px); line-height: 1.06; }
+  h3 { font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -.01em; line-height: 1.2; }
+  .lead { font-size: 20px; line-height: 1.5; max-width: 34em; margin-top: 20px; }
+  p, li { max-width: 62ch; }
+  .suave { color: var(--tinta2); }
+  .nota { font-size: 14px; color: var(--tinta2); }
+  .oscuro { background: var(--tinta); color: var(--tinta-sobre-oscuro); position: relative; overflow: clip; }
+  .hero::before, .oscuro::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 30%), rgba(155,91,255,.22), transparent 60%); opacity: 0; transition: opacity .5s var(--ease); }
+  .hero.luz::before, .oscuro.luz::before { opacity: 1; }
+  .hero { position: relative; }
+  .hero > .wrap, .oscuro > .wrap { position: relative; z-index: 1; }
+  .magnetico { will-change: transform; }
+  .oscuro > .orbitas-fondo { opacity: .08; right: -10vw; top: auto; bottom: -24vw; width: 46vw; height: 46vw; }
+  .oscuro .suave, .oscuro .nota { color: var(--tinta2-sobre-oscuro); }
 
-  /* Navegación */
-  header { position: sticky; top: 0; z-index: 50; background: rgba(11,10,16,.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-  .nav { display: flex; align-items: center; justify-content: space-between; height: 66px; gap: 16px; }
-  .nav-links { display: flex; gap: 28px; font-size: 14px; color: var(--mute); }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-right { display: flex; align-items: center; gap: 14px; }
-  .nav-right .dl { font-size: 14px; color: var(--mute); }
-  .nav-right .dl:hover { color: var(--ink); }
-  .nav .btn { padding: 10px 16px; font-size: 14px; }
-  @media (max-width: 860px) { .nav-links, .nav-right .dl { display: none; } }
+  /* ---------- Botones ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--texto); font-weight: 700; font-size: 17px; line-height: 1; padding: 17px 26px; border-radius: 999px; border: 0; cursor: pointer; min-height: 52px; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); }
+  .btn:active { transform: scale(.97); }
+  .btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .btn-wa { background: var(--verde); color: #fff; }
+  .btn-wa:hover { background: var(--verde-h); }
+  .oscuro .btn-wa { background: var(--verde-claro); color: var(--tinta); }
+  .oscuro .btn-wa:hover { background: #63d191; }
+  .btn-sec { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 2px var(--tinta); }
+  .btn-sec:hover { background: var(--tinta); color: var(--papel); }
+  .oscuro .btn-sec { color: var(--tinta-sobre-oscuro); box-shadow: inset 0 0 0 2px var(--tinta-sobre-oscuro); }
+  .oscuro .btn-sec:hover { background: var(--papel); color: var(--tinta); }
+  .marca-app { font-family: var(--display); font-size: 30px; letter-spacing: -.02em; line-height: 1; }
+  .marca-app b { font-weight: 800; }
+  .marca-app span { font-weight: 300; }
+  .marca-app .carte { color: #B58F1E; }
+  .marca-app .chats { color: #2a82c2; }
+  /* logos con las órbitas girando */
+  .logo-anim .o1 { transform-origin: 73px 73px; animation: giro-o 10s linear infinite; }
+  .logo-anim .o2 { transform-origin: 73px 73px; animation: giro-o 7s linear infinite reverse; }
+  @keyframes giro-o { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .logo-anim .o1, .logo-anim .o2 { animation: none; } }
+  /* SmartCarte: dorado de su marca (como en la página original) */
+  .ico-carte { width: 1.35em; height: 1.35em; vertical-align: -.3em; margin-right: 6px; flex: none; }
+  .enlace-carte { font-weight: 700; color: #8a6d12; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+  .enlace-carte:hover { color: #6b540c; }
+  .oscuro .enlace-carte, .foot .enlace-carte, .panel .enlace-carte { color: #D4AF37; }
+  .panel .logo-carte { display: block; width: 72px; height: 72px; margin: 0 0 14px; border-radius: 16px; }
+  .panel .vc { margin-top: 14px; display: inline-block; }
+  .enlace { font-weight: 700; color: var(--verde); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+  .enlace:hover { color: var(--verde-h); }
+  .oscuro .enlace { color: var(--verde-claro); }
 
-  /* Logo animado */
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo svg { width: 36px; height: 36px; flex-shrink: 0; }
-  .logo .name { font-size: 20px; font-weight: 700; letter-spacing: -.01em; line-height: 1; }
-  .logo .name span { color: var(--purple); font-weight: 300; }
-  .logo .tag { font-size: 8.5px; letter-spacing: .26em; color: var(--dim); margin-top: 3px; }
-  .orbit-cw  { transform-origin: 50px 50px; animation: spin-cw 5s linear infinite; }
-  .orbit-ccw { transform-origin: 50px 50px; animation: spin-ccw 7s linear infinite; }
-  @keyframes spin-cw  { from { transform: rotate(0deg); }  to { transform: rotate(360deg); } }
-  @keyframes spin-ccw { from { transform: rotate(65deg); } to { transform: rotate(-295deg); } }
-  .sc-ring-outer { animation: spin-cw 8s linear infinite; transform-origin: 36px 36px; }
-  .sc-ring-inner { animation: sc-rot-ccw 5s linear infinite; transform-origin: 36px 36px; }
-  .sc-pc { animation: sc-blink 1.8s ease-in-out infinite; }
-  @keyframes sc-rot-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-  @keyframes sc-blink { 0%,100% { opacity: 1; } 50% { opacity: .2; } }
-  @media (prefers-reduced-motion: reduce) { .orbit-cw, .orbit-ccw, .sc-ring-outer, .sc-ring-inner, .sc-pc { animation: none; } }
+  /* ---------- Cabecera ---------- */
+  header { position: sticky; top: 0; z-index: 50; background: rgba(13,13,18,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); color: var(--tinta-sobre-oscuro); }
+  header::after { content: ''; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--logo); transform: scaleX(var(--leido, 0)); transform-origin: left; }
+  header .nav-links, header .nav-right .dl, header .nav .solo-movil { color: var(--tinta2-sobre-oscuro); }
+  header .nav-links a:hover, header .nav-right .dl:hover { color: #fff; }
+  header .btn-wa { background: var(--verde-claro); color: var(--tinta); } header .btn-wa:hover { background: #c4b5fd; }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 16px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -.02em; }
+  header .logo { transition: opacity .3s var(--ease), transform .3s var(--ease); }
+  header.arriba .logo { opacity: 0; transform: translateY(-6px); pointer-events: none; }
+  @media (max-width: 900px) { header.arriba .logo { opacity: 1; transform: none; pointer-events: auto; } header .logo .wordmark { display: none; } }
+  .logo svg { width: 40px; height: 40px; flex-shrink: 0; transition: transform var(--t-med) var(--ease); }
+  .logo span { color: var(--logo); font-weight: 500; }
+  .logo .wordmark { height: 26px; width: auto; }
+  .logo:hover svg { transform: rotate(-8deg) scale(1.06); }
+  .nav-links { display: flex; gap: 22px; font-size: 15px; font-weight: 600; color: var(--tinta2); }
+  .nav-links a, .nav-right .dl { display: inline-flex; align-items: center; min-height: 44px; padding: 0 2px; }
+  .nav-links a:hover { color: var(--tinta); }
+  .nav-right { display: flex; align-items: center; gap: 18px; }
+  .nav-right .dl { font-size: 16px; font-weight: 600; color: var(--tinta2); }
+  .nav-right .dl:hover { color: var(--tinta); }
+  .nav .btn { padding: 12px 18px; font-size: 15px; min-height: 44px; }
+  .nav .btn svg { width: 18px; height: 18px; }
+  .nav .solo-movil { display: none; }
+  @media (max-width: 900px) {
+    .nav-links, .nav-right .dl { display: none; }
+    .nav .solo-movil { display: inline-block; font-size: 16px; font-weight: 600; color: var(--tinta2); padding: 10px 4px; }
+    .nav .btn span { display: none; }
+    .nav .btn { padding: 12px 16px; }
+  }
 
-  /* Hero */
-  .hero { padding: 80px 0 90px; overflow: hidden;
-    background: radial-gradient(900px 520px at 80% 0%, rgba(139,92,246,.28), transparent 60%), radial-gradient(700px 500px at 0% 100%, rgba(249,115,22,.12), transparent 60%); }
-  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
-  .hero-logo { width: 84px; height: 84px; margin-bottom: 22px; }
-  .hero h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 800; letter-spacing: -.035em; line-height: 1.02; }
-  .hero p.sub { color: var(--mute); font-size: 18px; margin-top: 20px; max-width: 540px; }
-  .hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
-  .client-dl { display: inline-block; margin-top: 16px; font-size: 14px; color: var(--mute); }
-  .client-dl b { color: var(--purple-l); font-weight: 600; } .client-dl:hover b { color: var(--ink); }
-  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
-  .badge { font-size: 13px; color: var(--mute); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; display: inline-flex; gap: 8px; align-items: center; }
-  .badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: inline-block; }
-  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } .hero-visual { order: 2; } }
+  /* ---------- Hero ---------- */
+  .hero { padding: 72px 0 88px; overflow: clip; position: relative; background: var(--tinta); color: var(--tinta-sobre-oscuro); }
+  .hero .riesgo, .hero .lead { color: var(--tinta2-sobre-oscuro); }
+  .hero .confianza { color: var(--tinta2-sobre-oscuro); } .hero .confianza svg { color: var(--verde-claro); }
+  .hero .enlace { color: var(--verde-claro); }
+  .hero .btn-wa { background: var(--verde-claro); color: var(--tinta); } .hero .btn-wa:hover { background: #c4b5fd; }
+  .hero .pie-ejemplo { color: var(--tinta2-sobre-oscuro); }
+  .hero-marca { display: inline-flex; align-items: center; gap: 18px; margin-bottom: 28px; font-family: var(--display); font-weight: 600; font-size: 26px; letter-spacing: -.02em; }
+  .hero-marca small { display: block; font-family: var(--texto); font-weight: 600; font-size: 16px; color: var(--tinta2-sobre-oscuro); margin-top: 2px; }
+  .hero-marca svg { width: clamp(66px, 7.4vw, 84px); height: clamp(66px, 7.4vw, 84px); filter: drop-shadow(0 16px 32px rgba(155,91,255,.35)); }
+  .hero-marca img { height: clamp(46px, 5.6vw, 66px); width: auto; }
+  .hero-marca span { color: var(--logo); font-weight: 500; }
+  /* Las órbitas del logo, enormes, detrás del hero: la apuesta visual */
+  .orbitas-fondo { position: absolute; right: -14vw; top: -22vw; width: 60vw; height: 60vw; color: var(--logo); opacity: .16; pointer-events: none; z-index: 0; will-change: transform; }
+  .campo > .wrap, .final > .wrap { position: relative; z-index: 1; }
+  .hero-marca .orb, .logo .orb { transform-origin: 73px 73px; }
+  /* Elipses quietas como en el logo oficial; los satélites van por SMIL dentro del símbolo; al pasar el cursor respiran 3° */
+  .orbita-h, .orbita-v { transform-origin: 73px 73px; transform-box: view-box; }
+  .logo:hover .orbita-h, .hero-marca:hover .orbita-h { animation: respira-h 2.4s ease-in-out infinite; } .logo:hover .orbita-v, .hero-marca:hover .orbita-v { animation: respira-v 2.4s ease-in-out infinite; }
+  @keyframes respira-h { 0%,100% { transform: rotate(0); } 50% { transform: rotate(3deg); } }
+  @keyframes respira-v { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-3deg); } }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; align-items: center; }
+  .hero h1 { max-width: 11em; }
+  .hero .lead { margin-top: 24px; max-width: 30em; }
+  .hero .ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px; margin-top: 32px; }
+  .hero .ctas .enlace { padding: 10px 0; }
+  .hero .riesgo { margin-top: 14px; font-size: 15px; color: var(--tinta2-sobre-oscuro); }
+  .confianza { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 15px; font-weight: 600; color: var(--tinta2); }
+  .confianza span { display: inline-flex; align-items: center; gap: 8px; }
+  .confianza svg { width: 18px; height: 18px; color: var(--verde); }
+  @media (max-width: 900px) {
+    .hero { padding: 24px 0 56px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero .ctas .btn { width: 100%; }
+    .hero .btn-sec { width: auto; }
+  }
 
-  /* Celular (maqueta de la app) */
-  .scene { position: relative; display: flex; justify-content: center; padding: 20px 0; }
-  .phone { width: 300px; height: 600px; background: #0f0e15; border: 3px solid #3b3550; border-radius: 48px; padding: 14px;
-    box-shadow: 0 40px 90px rgba(0,0,0,.6), 0 0 0 10px rgba(139,92,246,.06); position: relative; z-index: 1; }
-  .notch { width: 100px; height: 20px; background: #000; border-radius: 0 0 12px 12px; margin: -14px auto 8px; }
-  .screen { background: #f6f6f8; color: #18181b; border-radius: 36px; height: calc(100% - 14px); overflow: hidden; padding: 18px 16px; font-size: 13px; }
-  .chip { position: absolute; z-index: 2; background: rgba(23,20,35,.94); border: 1px solid var(--line2); border-radius: 16px; padding: 12px 16px; font-size: 13px; line-height: 1.3; box-shadow: 0 12px 30px rgba(0,0,0,.45); }
-  .chip b { display: block; font-size: 22px; font-weight: 800; }
-  .chip.g b { color: var(--green); } .chip.o b { color: var(--orange); } .chip.p b { color: var(--purple-l); }
-  .chip.l { left: calc(50% - 200px); bottom: 64px; } .chip.r { right: calc(50% - 200px); bottom: 4px; }
-  @media (max-width: 520px) { .chip.l { left: 8px; } .chip.r { right: 8px; } }
-  .s-title { font-weight: 800; font-size: 15px; } .s-sub { font-size: 11px; color: #71717a; }
-  .s-card { background: #fff; border-radius: 12px; padding: 10px; margin-top: 9px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-  .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; padding: 5px 0; }
-  .row + .row { border-top: 1px solid #f0f0f3; }
-  .okc { color: #16a34a; font-weight: 700; }
-  .pill { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; }
-  .p-green { background: #dcfce7; color: #15803d; } .p-purple { background: #ede9fe; color: #6d28d9; } .p-orange { background: #ffedd5; color: #c2410c; }
-  .big { font-size: 34px; font-weight: 800; letter-spacing: -.02em; text-align: center; }
-  .bars { display: flex; align-items: flex-end; gap: 5px; height: 70px; margin-top: 10px; }
-  .bars i { flex: 1; background: #c4b5fd; border-radius: 4px 4px 2px 2px; } .bars i.t { background: #7c3aed; }
-  .seg { display: flex; gap: 5px; margin-top: 7px; } .seg span { font-size: 10px; padding: 3px 9px; border-radius: 999px; background: #ececf1; } .seg span.a { background: #7c3aed; color: #fff; }
-  .strip { border-radius: 9px; padding: 7px 9px; display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; margin-top: 9px; }
-  .receipt { background: #fffdf7; border-radius: 6px; padding: 10px 12px; transform: rotate(-3deg); box-shadow: 0 6px 18px rgba(0,0,0,.15); font-family: 'Courier New', monospace; font-size: 9.5px; color: #3f3f46; position: relative; margin: 12px 4px; }
-  .receipt::after { content: ''; position: absolute; left: 0; right: 0; height: 3px; top: 46%; background: linear-gradient(90deg, transparent, #8b5cf6, transparent); box-shadow: 0 0 14px 4px rgba(139,92,246,.6); animation: scan 2.6s ease-in-out infinite; }
-  @keyframes scan { 0%,100% { top: 18%; } 50% { top: 82%; } }
-  .receipt .rl { display: flex; justify-content: space-between; }
+  /* ---------- El átomo vivo del logo (canvas) ---------- */
+  .atomo-wrap { position: relative; display: grid; justify-items: center; }
+  .atomo { width: min(100%, 560px); aspect-ratio: 1 / 1; height: auto; display: block; }
+  .atomo-wrap .chip { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); background: rgba(247,246,251,.96); color: var(--tinta); padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.25; box-shadow: 0 14px 34px rgba(0,0,0,.35); pointer-events: none; white-space: nowrap; opacity: 0; transition: opacity .3s var(--ease); }
+  .atomo-wrap .chip b { display: block; font-family: var(--display); font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
+  .atomo-wrap .chip.ver { opacity: 1; }
+  .atomo-wrap .pie-ejemplo { margin-top: 0; }
+  @media (max-width: 900px) { .atomo { width: min(100%, 360px); } .atomo-wrap .pie-ejemplo { font-size: 13px; } }
+  @media (prefers-reduced-motion: reduce) { .atomo-wrap .chip { opacity: 1; } }
+  @media (hover: none) { .solo-cursor { display: none; } }
+  @media (hover: hover) { .solo-tacto { display: none; } }
 
-  /* Diferenciales grandes (texto + celular) */
-  .feature { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 56px 0; border-top: 1px solid var(--line); }
-  .center + .feature { border-top: 0; }
-  .feature.rev .f-text { order: 2; }
-  .f-text h3 { font-size: clamp(26px, 3.2vw, 36px); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin-top: 12px; }
-  .f-text p { color: var(--mute); margin-top: 14px; font-size: 16px; }
-  .f-text ul { list-style: none; margin-top: 18px; }
-  .f-text li { display: flex; gap: 10px; color: #d6d3e3; font-size: 15px; padding: 5px 0; }
-  .f-text li::before { content: '✓'; color: var(--purple); font-weight: 800; }
-  .tagline { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--orange); font-weight: 700; }
-  @media (max-width: 900px) { .feature { grid-template-columns: 1fr; gap: 24px; } .feature.rev .f-text { order: 0; } }
-
-  /* Tarjetas */
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
-  @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 24px; transition: border-color .2s, transform .2s; }
-  .card:hover { border-color: var(--line2); transform: translateY(-2px); }
-  .card .ic { width: 42px; height: 42px; border-radius: 12px; background: rgba(139,92,246,.14); color: var(--purple-l); display: flex; align-items: center; justify-content: center; }
-  .card .ic svg { width: 22px; height: 22px; }
-  .card h4 { font-size: 17px; font-weight: 700; margin-top: 16px; }
-  .card p { color: var(--mute); font-size: 14.5px; margin-top: 8px; }
-
-  /* Lista estándar */
-  .std { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 28px; margin-top: 36px; }
-  @media (max-width: 900px) { .std { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 520px) { .std { grid-template-columns: 1fr; } }
-  .std div { display: flex; gap: 10px; color: #d6d3e3; font-size: 15px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-  .std div::before { content: '✓'; color: var(--green); font-weight: 800; }
-
-  /* Pasos */
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
-  @media (max-width: 800px) { .steps { grid-template-columns: 1fr; } }
-  .step { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 26px; }
-  .step .n { width: 44px; height: 44px; border-radius: 12px; background: rgba(139,92,246,.14); color: var(--purple-l); font-weight: 800; display: flex; align-items: center; justify-content: center; }
-  .step h4 { font-size: 18px; margin-top: 16px; } .step p { color: var(--mute); font-size: 14.5px; margin-top: 8px; }
-
-  /* Servicios adicionales */
-  .addons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
-  @media (max-width: 900px) { .addons { grid-template-columns: 1fr; } }
-  .addon { border-radius: 18px; padding: 26px; border: 1px solid var(--line2); background: linear-gradient(160deg, rgba(139,92,246,.14), rgba(22,19,31,.9)); }
-  .addon .k { font-size: 11px; letter-spacing: .18em; color: var(--purple-l); font-weight: 700; text-transform: uppercase; }
-  .addon h4 { font-size: 20px; margin-top: 8px; } .addon p { color: var(--mute); font-size: 14.5px; margin-top: 8px; }
+  /* ---------- La factura en papel → celular (ahora en la historia del producto) ---------- */
+  .lectura { position: relative; display: grid; grid-template-columns: 1fr; justify-items: center; }
+  .lectura .factura { position: relative; width: 212px; font-size: 11px; transform: rotate(-4deg); justify-self: start; margin: 0 0 -18px 8px; z-index: 2; }
+  .lectura .phone { margin-left: 70px; width: 264px; height: 500px; }
+  .pie-ejemplo { margin-top: 14px; font-size: 14px; color: var(--tinta2); text-align: center; }
+  @media (max-width: 900px) {
+    .lectura { max-width: 420px; margin: 0 auto; }
+  }
 
 
-  /* Planes */
-  .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 44px; align-items: stretch; }
-  @media (max-width: 800px) { .plans { grid-template-columns: 1fr; } }
-  .plan { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 30px 28px; display: flex; flex-direction: column; position: relative; }
-  .plan.feat { border-color: var(--purple); background: linear-gradient(160deg, rgba(139,92,246,.16), rgba(22,19,31,.95)); box-shadow: 0 18px 50px rgba(124,58,237,.18); }
-  .plan .ribbon { position: absolute; top: -12px; right: 24px; background: var(--purple); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
-  .plan h3 { font-size: 24px; font-weight: 800; }
-  .plan .for { color: var(--mute); font-size: 15px; margin-top: 6px; min-height: 46px; }
-  .plan .price { font-size: 42px; font-weight: 800; letter-spacing: -.03em; margin-top: 18px; line-height: 1; }
-  .plan .price small { font-size: 14px; font-weight: 500; color: var(--mute); letter-spacing: 0; }
-  .plan .per { font-size: 13px; color: var(--dim); margin-top: 6px; }
-  .plan ul { list-style: none; margin: 22px 0 26px; flex: 1; }
-  .plan li { display: flex; gap: 10px; color: #d6d3e3; font-size: 14.5px; padding: 6px 0; }
-  .plan li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; }
-  .plan li.more { color: var(--purple-l); font-weight: 600; }
-  .plan li.more::before { content: '+'; color: var(--purple-l); }
-  .plan .btn { justify-content: center; }
-  .mods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
-  @media (max-width: 900px) { .mods { grid-template-columns: 1fr; } }
-  .mod { border-radius: 18px; padding: 24px; border: 1px solid var(--line2); background: var(--card); }
-  .mod .k { font-size: 11px; letter-spacing: .18em; color: var(--purple-l); font-weight: 700; text-transform: uppercase; }
-  .mod h4 { font-size: 20px; margin-top: 8px; }
-  .mod .mp { font-size: 26px; font-weight: 800; margin-top: 10px; letter-spacing: -.02em; }
-  .mod .mp small { font-size: 13px; font-weight: 500; color: var(--mute); }
-  .mod p { color: var(--mute); font-size: 14.5px; margin-top: 8px; }
-  .mod .req { font-size: 12px; color: var(--orange); font-weight: 600; margin-top: 12px; }
-  .sub-h { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--purple-l); font-weight: 700; margin-top: 56px; }
-  .cmp-wrap { overflow-x: auto; margin-top: 18px; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
-  table.cmp { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
-  .cmp th, .cmp td { padding: 11px 16px; text-align: left; border-bottom: 1px solid var(--line); }
-  .cmp thead th { font-size: 14px; position: sticky; top: 0; background: var(--bg2); }
-  .cmp th.c, .cmp td.c { text-align: center; width: 150px; }
-  .cmp tr.g td { background: rgba(139,92,246,.1); color: var(--purple-l); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
-  .cmp td.y { color: var(--green); font-weight: 800; }
-  .cmp td.n { color: var(--dim); }
-  .cmp td.t { color: #d6d3e3; font-size: 13.5px; }
+  /* Tiquete de proveedor (de ejemplo): el papel real del oficio */
+  .factura { background: #fffdf6; color: #2a2923; font-family: var(--mono); font-size: 11px; line-height: 1.45; padding: 16px 14px 20px; box-shadow: 0 18px 40px rgba(0,0,0,.35); position: relative; transition: transform var(--t-med) var(--ease); }
+  .lectura:hover .factura { transform: rotate(-9deg) translateX(-6px); }
+  .factura::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 8px; background: linear-gradient(135deg, transparent 50%, #fffdf6 50%) 0 0/16px 8px repeat-x; }
+  .factura .cab { text-align: center; font-weight: 700; letter-spacing: .02em; }
+  .factura .cab small { display: block; font-weight: 400; font-size: 10px; }
+  .factura .rl { display: flex; justify-content: space-between; gap: 8px; }
+  .factura .sep { border-top: 1px dashed #b5b2a6; margin: 8px 0; }
+  .factura .total { font-weight: 700; }
+  .factura .sello { position: absolute; right: 10px; bottom: 26px; transform: rotate(-12deg); border: 2px solid var(--rojo); color: var(--rojo); font-family: var(--texto); font-weight: 800; font-size: 11px; letter-spacing: .04em; padding: 2px 6px; opacity: .85; }
+
+  /* ---------- Celular (maqueta de la app) ---------- */
+  .phone { width: 280px; height: 500px; background: #0f0620; border-radius: 40px; padding: 12px; box-shadow: 0 30px 60px rgba(30,10,60,.35); flex-shrink: 0; transition: transform var(--t-med) var(--ease); }
+  .escena:hover .phone, .lectura:hover .phone { transform: translateY(-6px) rotate(-1deg); }
+  .phone .screen { background: #f7f7f5; color: #17160f; border-radius: 30px; height: 100%; overflow: hidden; padding: 16px 14px 56px; font-family: var(--texto); font-size: 13px; line-height: 1.35; position: relative; }
+  .screen .tabs { position: absolute; left: 0; right: 0; bottom: 0; height: 48px; background: #fff; border-top: 1px solid #ecebe6; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; text-align: center; font-size: 10px; font-weight: 700; color: #6b6a62; border-radius: 0 0 30px 30px; }
+  .screen .tabs span.a { color: var(--verde); }
+  .screen .tabs i { display: block; width: 18px; height: 18px; margin: 0 auto 3px; border-radius: 5px; background: currentColor; opacity: .35; }
+  .screen .tabs span.a i { opacity: 1; }
+  .screen .s-top { display: flex; justify-content: space-between; align-items: center; }
+  .screen .s-title { font-weight: 700; font-size: 15px; }
+  .screen .s-sub { font-size: 12px; color: #5c5b54; }
+  .screen .s-card { background: #fff; border-radius: 14px; padding: 10px; margin-top: 10px; }
+  .screen .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12.5px; padding: 6px 0; }
+  .screen .row + .row { border-top: 1px solid #ecebe6; }
+  .screen .ok { color: var(--plata); font-weight: 700; }
+  .screen .pill { display: inline-block; white-space: nowrap; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--papel2); color: #3b3a33; }
+  .screen .pill.v { background: #dcf3e4; color: var(--plata); }
+  .screen .pill.r { background: #f7dcd9; color: var(--rojo); }
+  .screen .big { font-family: var(--display); font-size: 32px; font-weight: 800; letter-spacing: -.02em; text-align: center; margin-top: 6px; }
+  .screen .bars { display: flex; align-items: flex-end; gap: 5px; height: 72px; margin-top: 10px; }
+  .screen .bars i { flex: 1; background: #ddd2fb; border-radius: 3px 3px 0 0; } .screen .bars i.t { background: var(--logo); }
+  .screen .seg { display: flex; gap: 5px; margin-top: 8px; } .screen .seg span { font-size: 11px; padding: 3px 9px; border-radius: 999px; background: #ecebe6; } .screen .seg span.a { background: var(--tinta); color: #fff; }
+  .screen .strip { border-radius: 12px; padding: 8px 10px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; margin-top: 10px; background: var(--verde-campo); color: var(--verde); }
+  .screen .strip.accion { background: var(--verde); color: #fff; }
+  .screen .centro { text-align: center; font-size: 12px; color: #5c5b54; }
+  .screen .ejemplo { font-size: 11px; color: #5c5b54; text-align: right; margin-top: 8px; }
+
+  /* Lectura de la factura: una sola coreografía, se ejecuta una vez al cargar */
+  .screen .lee .row .ok { opacity: 0; animation: aparece .3s var(--ease) forwards; }
+  .screen .lee .row:nth-child(2) .ok { animation-delay: .9s; }
+  .screen .lee .row:nth-child(3) .ok { animation-delay: 1.2s; }
+  .screen .lee .row:nth-child(4) .ok { animation-delay: 1.5s; }
+  .screen .lee .row:nth-child(5) .ok { animation-delay: 1.8s; }
+  .screen .lee + .strip { opacity: 0; animation: aparece .3s var(--ease) 2.1s forwards; }
+  @keyframes aparece { to { opacity: 1; } }
+
+  /* ---------- Entrada del hero al cargar: la única coreografía de la página (sin JS, sin scroll) ---------- */
+  .hero .rev { animation: sube .55s var(--ease) both; }
+  .hero .rev.d1 { animation-delay: 70ms; } .hero .rev.d2 { animation-delay: 140ms; } .hero .rev.d3 { animation-delay: 210ms; }
+  @keyframes sube { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  /* Entradas por scroll sin JS y sin esconder nada: solo se mueven, nunca desaparecen */
+  @keyframes acomoda { from { transform: translateY(28px); } to { transform: none; } }
+
+  .btn:active { transform: scale(.97) !important; }
+  .btn { transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease); }
+  .btn-wa:hover { box-shadow: 0 10px 30px rgba(155,91,255,.35); }
+  .plan { transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease); }
+  .plan:hover { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(13,13,18,.14); }
+  .modulo, .todo .cols > div, .dudas .grid > div { transition: transform var(--t-med) var(--ease); }
+  .modulo:hover, .todo .cols > div:hover, .dudas .grid > div:hover { transform: translateX(6px); }
+
+  /* ---------- Franja: lo de siempre ---------- */
+  .siempre { padding: 88px 0; }
+  .campo { background: var(--logo); color: var(--tinta); position: relative; overflow: clip; }
+  .campo > .orbitas-fondo { color: var(--tinta); opacity: .12; right: -10vw; top: auto; bottom: -24vw; width: 46vw; height: 46vw; }
+  .siempre .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px 64px; align-items: start; }
+  .siempre h2 { max-width: 10em; }
+  .siempre ol { list-style: none; counter-reset: s; display: grid; gap: 28px; }
+  .siempre li { font-family: var(--display); font-weight: 500; font-size: clamp(21px, 2.1vw, 26px); line-height: 1.22; letter-spacing: -.015em; max-width: 20em; color: var(--tinta); }
+  .siempre li b { color: var(--tinta-sobre-oscuro); background: var(--tinta); font-weight: 700; display: block; margin-top: 10px; padding: 10px 14px; border-radius: 6px; font-size: .68em; font-family: var(--texto); line-height: 1.4; }
+  .siempre li b::before { content: '→ '; color: var(--logo); }
+  .siempre li b em { font-style: normal; color: var(--verde-claro); }
+  .siempre h2 { color: var(--tinta); }
+  @media (max-width: 760px) { .siempre .grid { grid-template-columns: 1fr; gap: 32px; } .siempre { padding: 64px 0; } }
+
+  /* ---------- Resultados (texto + pantalla real) ---------- */
+  .resultado { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 72px 0; }
+  .resultado h2 { font-size: clamp(28px, 3.3vw, 44px); }
+  .resultado.rev .texto { order: 2; }
+  .resultado .texto p { margin-top: 18px; font-size: 18px; }
+  .resultado ul { list-style: none; margin-top: 22px; display: grid; gap: 10px; }
+  .resultado li { display: flex; gap: 12px; font-size: 17px; }
+  .resultado li svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--verde); margin-top: 2px; }
+  .resultado .escena { display: grid; justify-items: center; }
+  .resultado .cta-inline { margin-top: 26px; display: inline-flex; }
+  @media (max-width: 900px) {
+    .resultado { grid-template-columns: 1fr; gap: 32px; padding: 56px 0; }
+    .resultado.rev .texto { order: 0; }
+    .resultado .escena { order: 2; }
+  }
+
+  /* Historia del producto: celular fijo (escritorio) */
+  .historia { padding: 96px 0 64px; }
+  .historia-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .paso-h { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: 48px 0; }
+  .paso-h h2 { font-size: clamp(28px, 3.3vw, 44px); }
+  .paso-h p { margin-top: 18px; font-size: 18px; }
+  .paso-h ul { list-style: none; margin-top: 22px; display: grid; gap: 10px; }
+  .paso-h li { display: flex; gap: 12px; font-size: 17px; }
+  .paso-h li svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--verde); margin-top: 2px; }
+  .paso-h .cta-inline { margin-top: 26px; align-self: flex-start; }
+  .paso-h .escena-m { display: none; }
+  .fijo { position: sticky; top: 96px; display: grid; justify-items: center; }
+  .phone-fijo { position: relative; }
+  .phone-fijo .pantalla { position: absolute; inset: 12px; height: auto; opacity: 0; transform: translateY(14px) scale(.98); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+  .phone-fijo .pantalla.activa { opacity: 1; transform: none; }
+  .phone-fijo .pantalla .lee .row .ok, .phone-fijo .pantalla .lee + .strip { opacity: 1; animation: none; }
+  .phone-fijo .pantalla.activa .lee .row .ok { opacity: 0; animation: aparece .3s var(--ease) forwards; }
+  .phone-fijo .pantalla.activa .lee .row:nth-child(2) .ok { animation-delay: .5s; } .phone-fijo .pantalla.activa .lee .row:nth-child(3) .ok { animation-delay: .8s; } .phone-fijo .pantalla.activa .lee .row:nth-child(4) .ok { animation-delay: 1.1s; } .phone-fijo .pantalla.activa .lee .row:nth-child(5) .ok { animation-delay: 1.4s; }
+  .phone-fijo .pantalla.activa .lee + .strip { opacity: 0; animation: aparece .3s var(--ease) 1.7s forwards; }
+  @media (max-width: 900px) {
+    .historia { padding: 64px 0 24px; }
+    .historia-grid { grid-template-columns: 1fr; gap: 0; }
+    .fijo { display: none; }
+    .paso-h { min-height: 0; padding: 32px 0; }
+    .paso-h .escena-m { display: grid; justify-items: center; margin-top: 32px; }
+    .paso-h .lectura { max-width: 420px; }
+  }
+
+  /* Tercer resultado: banda oscura con el celular en el centro */
+  .ventas { padding: 112px 0; }
+  .ventas .grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 48px; align-items: center; }
+  .ventas h2 { grid-column: 1 / -1; max-width: 12em; }
+  .ventas ul { list-style: none; display: grid; gap: 14px; font-size: 18px; }
+  .ventas li { display: flex; gap: 12px; }
+  .ventas li svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--verde-claro); margin-top: 3px; }
+  .ventas .lado p { font-size: 18px; }
+  .ventas .lado .btn { margin-top: 24px; }
+  .ventas .pie-ejemplo { color: var(--tinta2-sobre-oscuro); }
+  @media (max-width: 900px) {
+    .ventas { padding: 72px 0; }
+    .ventas .grid { grid-template-columns: 1fr; gap: 32px; justify-items: start; }
+    .ventas .escena { justify-self: center; }
+  }
+
+  /* ---------- El flujo de la plata ---------- */
+  .plata-cab { max-width: 46em; }
+  .flujo { list-style: none; position: relative; display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; margin-top: 56px; padding-top: 44px; }
+  .flujo .hilo { position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 40px; }
+  .flujo .corre { animation: corre 2.4s linear infinite; }
+  @keyframes corre { to { stroke-dashoffset: -48; } }
+  .flujo li { position: relative; }
+  .flujo li::before { content: ''; position: absolute; left: 0; top: -36px; width: 16px; height: 16px; border-radius: 50%; background: var(--logo); box-shadow: 0 0 0 5px var(--tinta); }
+  .flujo li:last-child::before { background: var(--naranja); }
+  .flujo li { display: flex; }
+  .flujo button { width: 100%; height: 100%; text-align: left; background: var(--oscuro2); color: var(--tinta-sobre-oscuro); border: 0; padding: 18px 18px 16px; cursor: pointer; font-family: var(--texto); display: grid; align-content: start; gap: 6px; min-height: 148px; border-radius: 16px; transition: background var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+  .flujo button b { font-family: var(--display); font-weight: 600; font-size: 19px; letter-spacing: -.01em; }
+  .flujo button span { font-size: 14.5px; color: var(--tinta2-sobre-oscuro); line-height: 1.4; }
+  .flujo button:hover { background: #221f2e; transform: translateY(-3px); box-shadow: 0 14px 30px rgba(155,91,255,.18); }
+  .flujo li.abierto::before { animation: pulso 1.6s var(--ease) infinite; }
+  @keyframes pulso { 0%,100% { box-shadow: 0 0 0 5px var(--tinta), 0 0 0 5px rgba(155,91,255,0); } 50% { box-shadow: 0 0 0 5px var(--tinta), 0 0 0 12px rgba(155,91,255,.25); } }
+  .flujo button[aria-expanded="true"] { background: var(--logo); color: var(--tinta); }
+  .flujo button[aria-expanded="true"] span { color: var(--tinta); }
+  .flujo li:last-child button[aria-expanded="true"] { background: var(--naranja); }
+  .flujo .mas { display: none; }
+  .flujo-detalle { margin-top: 20px; padding: 22px 26px; background: var(--oscuro2); font-size: 18px; line-height: 1.5; max-width: none; animation: despliega .3s var(--ease); border-radius: 16px; border-left: 4px solid var(--logo); }
+  .flujo-detalle b { color: var(--verde-claro); }
+  .flujo-detalle:empty { display: none; }
+  .plata-pie { margin-top: 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
+  .plata-pie .nota { max-width: 48em; }
+  @media (max-width: 1000px) { .flujo { grid-template-columns: repeat(3, 1fr); } .flujo .hilo { display: none; } .flujo li::before { display: none; } .flujo { padding-top: 0; } }
+  @media (max-width: 600px) { .flujo { grid-template-columns: 1fr; gap: 12px; } .flujo button { min-height: 0; } }
+  @media (prefers-reduced-motion: reduce) { .flujo .corre { animation: none; } .flujo .mas { animation: none; } }
+
+  /* ---------- Lo que ningún Excel: botones ---------- */
+  .excel { background: var(--papel2); }
+  .excel-cab { max-width: 44em; }
+  .excel-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px 56px; margin-top: 44px; align-items: start; }
+  .botones { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 900px) { .botones { display: flex; flex-wrap: wrap; } }
+  .botones button { font-family: var(--texto); font-weight: 700; font-size: 16px; line-height: 1.2; color: var(--tinta); background: var(--papel); border: 0; border-radius: 999px; padding: 14px 20px; min-height: 52px; cursor: pointer; display: inline-flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease); }
+  .botones button small { font-size: 12px; font-weight: 800; color: var(--naranja-tinta); letter-spacing: .02em; }
+  .botones button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(13,13,18,.12); }
+  .botones button[aria-selected="true"] { background: var(--tinta); color: var(--papel); }
+  .botones button[aria-selected="true"] small { color: var(--naranja); }
+  .panel { position: relative; background: var(--tinta); color: var(--tinta-sobre-oscuro); padding: 32px 28px 28px; min-height: 320px; overflow: hidden; border-radius: 16px; }
+  .panel .tag { display: inline-block; font-size: 13px; font-weight: 800; color: var(--naranja); margin-bottom: 10px; min-height: 1.2em; }
+  .panel h3 { font-size: 28px; }
+  .panel p { margin-top: 12px; font-size: 17px; color: var(--tinta2-sobre-oscuro); }
+  .panel .muestra { margin-top: 22px; background: #f7f7f5; color: #17160f; border-radius: 14px; padding: 12px; font-size: 13px; line-height: 1.35; box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+  .panel .muestra .row:first-child { background: var(--papel2); margin: -12px -12px 4px; padding: 10px 12px; border-radius: 14px 10px 0 0; }
+  .panel .muestra .row { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; font-size: 12.5px; }
+  .panel .muestra .row + .row { border-top: 1px solid #ecebe6; }
+  .panel .muestra .ok { color: var(--plata); font-weight: 700; } .panel .muestra .al { color: var(--naranja-tinta); font-weight: 700; }
+  .panel .muestra .nota-m { font-size: 11px; color: #5c5b54; text-align: right; margin-top: 6px; }
+  .panel .panel-in { animation: despliega .35s var(--ease); }
+  .panel .barra-tiempo { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: rgba(255,255,255,.14); border-radius: 0 0 16px 16px; overflow: hidden; }
+  .panel .barra-tiempo i { display: block; height: 100%; width: 0; background: var(--naranja); }
+  .panel.auto .barra-tiempo i { animation: avanza 6s linear forwards; }
+  @keyframes avanza { to { width: 100%; } }
+  @media (max-width: 900px) { .excel-grid { grid-template-columns: 1fr; gap: 24px; } .botones button { font-size: 15px; padding: 12px 16px; min-height: 44px; } .panel { padding: 24px 20px; min-height: 0; } }
+  @media (prefers-reduced-motion: reduce) { .panel .panel-in { animation: none; } .panel .barra-tiempo { display: none; } }
+
+  /* ---------- Todo lo demás: lista en columnas, sin tarjetas ---------- */
+  .todo .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 40px; margin-top: 48px; }
+  .todo h3 { padding-bottom: 12px; margin-bottom: 14px; background: linear-gradient(var(--tinta), var(--tinta)) bottom/100% 2px no-repeat; }
+  .todo ul { list-style: none; display: grid; gap: 9px; font-size: 16px; }
+  .todo li small { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--naranja-tinta); margin-left: 6px; white-space: nowrap; }
+  .todo .nota { margin-top: 36px; }
+  @media (max-width: 900px) { .todo .cols { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .todo .cols { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ---------- Cómo funciona: lista ordenada real ---------- */
+  .pasos ol { list-style: none; counter-reset: paso; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+  .pasos li { counter-increment: paso; padding-top: 18px; background: linear-gradient(var(--tinta), var(--tinta)) top/100% 2px no-repeat; }
+  .pasos li h3 { font-size: 22px; }
+  .pasos li h3::before { content: counter(paso) '. '; color: var(--verde); }
+  .pasos li p { margin-top: 10px; font-size: 17px; }
+  .pasos .cta-fila { margin-top: 48px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+  @media (max-width: 760px) { .pasos ol { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* ---------- Planes ---------- */
+  .planes .cab { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 64px; align-items: end; }
+  .planes .cab .lead { margin-top: 0; }
+  .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; align-items: stretch; }
+  .plan { background: var(--papel2); padding: 32px 28px 28px; display: flex; flex-direction: column; border-radius: 16px; }
+  .plan.rec { background: var(--tinta); color: var(--tinta-sobre-oscuro); box-shadow: inset 0 0 0 3px var(--logo); }
+  .plan .etiqueta { font-size: 15px; font-weight: 700; color: var(--logo); margin-top: 6px; }
+  .plan h3 { font-size: 30px; }
+  .plan .para { margin-top: 6px; font-size: 16px; color: var(--tinta2); min-height: 2.9em; }
+  .plan.rec .para { color: var(--tinta2-sobre-oscuro); }
+  .plan .precio { font-family: var(--display); font-size: 46px; font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-top: 20px; }
+  .plan .precio small { font-size: 16px; font-weight: 600; letter-spacing: 0; color: var(--tinta2); }
+  .plan.rec .precio small { color: var(--tinta2-sobre-oscuro); }
+  .plan ul { list-style: none; margin: 24px 0 28px; flex: 1; display: grid; gap: 8px; font-size: 16px; }
+  .plan li { display: flex; gap: 10px; }
+  .plan li svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--verde); margin-top: 3px; }
+  .plan.rec li svg { color: var(--verde-claro); }
+  .plan li.mas { font-weight: 700; }
+  .plan .btn { width: 100%; }
+  .plan .btn-sec { color: var(--tinta); box-shadow: inset 0 0 0 2px var(--tinta); }
+  .plan .btn-sec:hover { background: var(--tinta); color: var(--papel); }
+  @media (max-width: 800px) {
+    .planes .cab { grid-template-columns: 1fr; }
+    .plans { grid-template-columns: 1fr; }
+    .plan { padding: 28px 20px 24px; }
+    .plan.rec { order: -1; }
+  }
+  .modulos { margin-top: 56px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 32px 40px; }
+  .modulos .modulo { grid-column: span 2; display: flex; flex-direction: column; }
+  .modulos .modulo.mitad { grid-column: span 3; }
+  .modulos .modulo .req { margin-top: auto; padding-top: 12px; }
+  .modulo h3:has(.logo-mod) { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .modulo h3 .logo-mod { flex: none; width: 56px; height: 56px; border-radius: 14px; }
+  .modulos > h3 { grid-column: 1 / -1; font-size: 24px; }
+  .modulo { padding-top: 16px; background: linear-gradient(var(--tinta), var(--tinta)) top/100% 2px no-repeat; }
+  .modulo h3 { font-size: 20px; }
+  .modulo .mp { font-family: var(--display); font-size: 28px; font-weight: 800; letter-spacing: -.02em; margin-top: 8px; }
+  .modulo .mp small { font-size: 14px; font-weight: 600; color: var(--tinta2); }
+  .modulo p { margin-top: 8px; font-size: 16px; color: var(--tinta2); }
+  .modulo .req { margin-top: 10px; font-size: 14px; font-weight: 700; color: var(--naranja-tinta); }
+  @media (max-width: 800px) { .modulos { grid-template-columns: 1fr; gap: 24px; } .modulos .modulo, .modulos .modulo.mitad { grid-column: auto; } }
+
+  /* Calculadora: lo vivo de la página */
+  .calc { margin-top: 56px; background: var(--papel2); padding: 32px 28px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px 48px; border-radius: 16px; }
+  .calc h3 { grid-column: 1 / -1; font-size: 28px; }
+  .calc fieldset { border: 0; margin-top: 18px; }
+  .calc legend { font-weight: 700; font-size: 16px; margin-bottom: 10px; }
+  .calc .opciones { display: flex; flex-wrap: wrap; gap: 10px; }
+  .calc label.op { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 16px; border-radius: 999px; background: var(--papel); font-weight: 600; cursor: pointer; font-size: 16px; }
+  .calc label.op:has(input:checked) { background: var(--tinta); color: var(--papel); }
+  .calc label.op input { width: 18px; height: 18px; accent-color: var(--verde); margin: 0; }
+  .calc .sedes { display: inline-flex; align-items: center; gap: 0; background: var(--papel); border-radius: 999px; }
+  .calc .sedes button { width: 48px; height: 48px; border: 0; background: transparent; font-size: 24px; font-weight: 700; cursor: pointer; border-radius: 999px; color: var(--tinta); font-family: var(--texto); }
+  .calc .sedes button:hover { background: var(--papel3); }
+  .calc .sedes output { min-width: 3.5em; text-align: center; font-weight: 700; font-size: 18px; }
+  .calc .total { background: var(--tinta); color: var(--tinta-sobre-oscuro); padding: 24px; align-self: start; border-radius: 16px; }
+  .calc .total .cifra { font-family: var(--display); font-size: clamp(38px, 4vw, 52px); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin-top: 6px; }
+  .calc .total .cifra small { font-size: 16px; font-weight: 600; letter-spacing: 0; color: var(--tinta2-sobre-oscuro); }
+  .calc .total .desglose { margin-top: 14px; font-size: 15px; color: var(--tinta2-sobre-oscuro); display: grid; gap: 4px; }
+  .calc .total .aviso { margin-top: 12px; font-size: 14px; color: var(--verde-claro); font-weight: 700; min-height: 1.4em; }
+  .calc .total .btn { margin-top: 18px; width: 100%; background: var(--verde-claro); color: var(--tinta); }
+  .calc .total .btn:hover { background: #63d191; }
+  .calc .total .nota { margin-top: 12px; color: var(--tinta2-sobre-oscuro); }
+  @media (max-width: 800px) { .calc { grid-template-columns: 1fr; padding: 24px 20px; } .calc .total { padding: 20px 16px; } }
+
+  /* Comparativo largo: colapsado */
+  .comparativo { margin-top: 32px; }
+  .comparativo > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--verde); padding: 10px 0; min-height: 44px; }
+  .comparativo > summary::-webkit-details-marker { display: none; }
+  .comparativo > summary svg { width: 20px; height: 20px; transition: transform var(--t-med) var(--ease); }
+  .comparativo[open] > summary svg { transform: rotate(180deg); }
+  .cmp-wrap { overflow-x: auto; margin-top: 16px; background: var(--papel2); border-radius: 16px; }
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+  .cmp th, .cmp td { padding: 11px 16px; text-align: left; border-bottom: 1px solid var(--papel3); }
+  .cmp thead th { font-size: 15px; font-weight: 700; }
+  .cmp th.c, .cmp td.c { text-align: center; width: 160px; }
+  .cmp tr.g td { background: var(--papel3); font-weight: 700; font-size: 14px; }
+  .cmp td.y { color: var(--verde); font-weight: 800; }
+  .cmp td.n { color: var(--tinta2); }
   .cmp tr:last-child td { border-bottom: 0; }
-  .ptag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: rgba(249,115,22,.14); color: var(--orange); margin-left: 8px; vertical-align: middle; }
 
-  /* FAQ */
-  .faq { max-width: 820px; margin: 40px auto 0; }
-  details { border: 1px solid var(--line); border-radius: 14px; background: var(--card); margin-bottom: 10px; }
-  summary { cursor: pointer; list-style: none; padding: 18px 22px; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: '+'; color: var(--purple-l); font-size: 22px; line-height: 1; }
-  details[open] summary::after { content: '–'; }
-  details p { color: var(--mute); padding: 0 22px 18px; font-size: 15px; }
+  /* ---------- Objeciones ---------- */
+  .dudas .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 64px; margin-top: 48px; }
+  .dudas h3 { font-size: 22px; }
+  .dudas p { margin-top: 10px; font-size: 17px; }
+  @media (max-width: 760px) { .dudas .grid { grid-template-columns: 1fr; gap: 32px; } }
 
-  /* CTA final y pie */
-  .final { text-align: center; border: 1px solid var(--line2); border-radius: 26px; padding: 56px 24px;
-    background: radial-gradient(600px 300px at 50% 0%, rgba(139,92,246,.25), transparent 70%), var(--bg2); }
-  .final h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
-  .final p { color: var(--mute); margin: 14px auto 28px; max-width: 560px; }
-  footer { border-top: 1px solid var(--line); padding: 44px 0 32px; color: var(--dim); font-size: 14px; }
-  .foot { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 28px; }
+  /* ---------- FAQ ---------- */
+  .faq { max-width: 820px; }
+  .faq details { background: var(--papel2); margin-bottom: 8px; border-radius: 16px; transition: background var(--t-med) var(--ease); }
+  .faq details[open] { background: var(--verde-campo); }
+  .faq details p { padding: 0 24px 20px; animation: despliega .35s var(--ease); }
+  @keyframes despliega { from { opacity: 0; transform: translateY(-6px); } }
+  .faq summary { cursor: pointer; list-style: none; padding: 20px 24px; font-weight: 700; font-size: 18px; display: flex; justify-content: space-between; gap: 16px; align-items: center; min-height: 44px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--verde); transition: transform var(--t-med) var(--ease); }
+  .faq details[open] summary svg { transform: rotate(45deg); }
+  .faq details p { font-size: 17px; color: var(--tinta2); }
+
+  /* ---------- CTA final: campo de color ---------- */
+  .final { background: var(--verde); color: #fff; padding: 104px 0; position: relative; overflow: clip; }
+  .final .orbitas-fondo { color: #fff; opacity: .14; right: -8vw; top: -14vw; width: 44vw; height: 44vw; }
+  .final p { color: #efe9ff; }
+  .final h2 { max-width: 12em; }
+  .final .grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px 64px; align-items: center; }
+  .final p { font-size: 20px; margin-top: 18px; }
+  .final .btn-wa { background: var(--tinta); color: #fff; font-size: 18px; padding: 20px 30px; }
+  .final .btn-wa:hover { background: #2b1554; }
+  .final .numero { margin-top: 16px; font-size: 16px; }
+  .final .numero a { font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 800px) { .final { padding: 72px 0; } .final .grid { grid-template-columns: 1fr; } .final .btn-wa { width: 100%; } }
+
+  /* ---------- Pie ---------- */
+  footer { background: var(--tinta); color: var(--tinta2-sobre-oscuro); padding: 56px 0 40px; font-size: 15px; }
+  .foot { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 32px; }
+  .foot h3 { color: var(--tinta-sobre-oscuro); font-size: 16px; margin-bottom: 12px; }
+  .foot a { display: block; padding: 11px 0; } .foot a:hover { color: var(--tinta-sobre-oscuro); }
+  .foot .logo { color: var(--tinta-sobre-oscuro); display: inline-flex; }
+  .foot p { margin-top: 14px; max-width: 34em; }
+  .foot .enlace { display: inline; padding: 0; color: var(--verde-claro); }
+  .nombre-grande { font-family: var(--display); font-weight: 600; font-size: clamp(48px, 9.5vw, 140px); letter-spacing: -.04em; line-height: .9; color: var(--tinta-sobre-oscuro); margin-top: 48px; display: flex; align-items: center; gap: .18em; flex-wrap: wrap; }
+  .nombre-grande span { color: var(--logo); font-weight: 500; }
+  .nombre-grande .logo-grande { width: .95em; height: .95em; flex-shrink: 0; }
+  .nombre-grande img { height: .95em; width: auto; }
+
+  .copy { margin-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 14px; }
+  .copy a { font-weight: 700; } .copy a:hover { color: var(--tinta-sobre-oscuro); }
   @media (max-width: 700px) { .foot { grid-template-columns: 1fr; } }
-  .foot h5 { color: var(--ink); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 12px; }
-  .foot .logo { color: var(--ink); }
-  .foot a { display: block; padding: 3px 0; } .foot a:hover { color: var(--ink); }
-  .copy { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 13px; }
-  .copy a { color: var(--mute); font-weight: 600; } .copy a:hover { color: var(--ink); }
-  .note { font-size: 12px; color: var(--dim); margin-top: 10px; }
+
+  /* ---------- Barra fija en celular ---------- */
+  .barra { display: none; }
+  @media (max-width: 900px) {
+    .js .barra { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--papel); box-shadow: 0 -8px 24px rgba(23,22,15,.12); transform: translateY(110%); transition: transform var(--t-med) var(--ease); }
+    .js .barra.ver { transform: none; }
+    .barra .btn { width: 100%; }
+    .js body.con-barra { padding-bottom: 76px; }
+  }
+
+  /* ---------- Movimiento reducido ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero .rev, main > section .rev, .orbita-h, .orbita-v, .faq details p { animation: none !important; }
+    header::after { display: none; }
+    .plan:hover, .modulo:hover, .btn:hover, .escena:hover .phone, .lectura:hover .phone, .lectura:hover .factura { transform: none; }
+    .screen .lee .row .ok, .screen .lee + .strip { opacity: 1; animation: none; }
+    .btn, .faq summary svg, .comparativo > summary svg, .barra { transition: none; }
+  }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4 12.5l5 5L20 6.5"/></symbol>
+  <symbol id="i-mas" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-abajo" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></symbol>
+  <!-- Logo oficial de SmartVente (logos_smartlevels_alta_resolucion/SmartVente_icono.svg), tal cual -->
+  <symbol id="i-logo" viewBox="0 0 146 146"><rect width="146" height="146" rx="16" fill="#9B5BFF"/>
+    <g class="orbita-h"><ellipse cx="73" cy="73" rx="54" ry="21.5" fill="none" stroke="#0d0d0d" stroke-opacity="0.4" stroke-width="1.45"/><circle r="6" fill="#0d0d0d"><animateMotion dur="11s" repeatCount="indefinite" path="M127,73 a54,21.5 0 1,1 -108,0 a54,21.5 0 1,1 108,0"/></circle></g>
+    <g class="orbita-v"><ellipse cx="73" cy="73" rx="21.5" ry="54" fill="none" stroke="#0d0d0d" stroke-opacity="0.4" stroke-width="1.45"/><circle r="6" fill="#0d0d0d"><animateMotion dur="15s" repeatCount="indefinite" path="M73,19 a21.5,54 0 1,0 0,108 a21.5,54 0 1,0 0,-108"/></circle></g>
+    <circle cx="73" cy="73" r="8" fill="none" stroke="#0d0d0d" stroke-width="7"/></symbol>
+  <!-- La órbita sola (Orbita_dibujo_blanco.svg), para fondos -->
+  <symbol id="i-orbitas" viewBox="10 10 126 126"><g fill="none"><ellipse cx="73" cy="73" rx="54" ry="21.5" stroke="currentColor" stroke-width="1.45"/><ellipse cx="73" cy="73" rx="21.5" ry="54" stroke="currentColor" stroke-width="1.45"/><circle cx="73" cy="73" r="8" stroke="currentColor" stroke-width="7"/></g><circle cx="73" cy="19" r="6" fill="currentColor"/><circle cx="127" cy="73" r="6" fill="currentColor"/></symbol>
+</svg>
+
 <header>
   <div class="wrap nav">
-    <a href="#" class="logo" aria-label="SmartVente">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <rect width="100" height="100" rx="22" fill="#8b5cf6"/>
-        <g class="orbit-cw"><ellipse cx="50" cy="50" rx="13" ry="30" fill="none" stroke="#1e0a3c" stroke-width="1.8" opacity="0.85"/><circle cx="50" cy="20" r="4.5" fill="#1e0a3c"/></g>
-        <g class="orbit-ccw"><ellipse cx="50" cy="50" rx="13" ry="30" fill="none" stroke="#1e0a3c" stroke-width="1.8" opacity="0.85"/><circle cx="50" cy="80" r="4" fill="#1e0a3c"/></g>
-        <circle cx="50" cy="50" r="8.5" fill="#1e0a3c"/><circle cx="50" cy="50" r="4" fill="#8b5cf6"/>
-      </svg>
-      <div><div class="name">Smart<span>Vente</span></div><div class="tag">AI-POWERED POS</div></div>
-    </a>
-    <nav class="nav-links">
-      <a href="#diferente">Lo diferente</a>
-      <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#" class="logo" aria-label="SmartVente, inicio"><svg aria-hidden="true"><use href="#i-logo"/></svg><img class="wordmark" src="/marca/wordmark-claro.png" alt="SmartVente" width="1034" height="151"></a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#resultados">Qué resuelve</a>
+      <a href="#plata">Su dinero</a>
+      <a href="#excel">Funcionalidades</a>
       <a href="#planes">Planes</a>
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="#faq">FAQ</a>
+      <a href="#faq">Preguntas</a>
     </nav>
     <div class="nav-right">
       <a class="dl" href="/descargar/">Descargar</a>
-      <a class="btn btn-primary wa" href="#">Solicitar demo</a>
+      <a class="solo-movil" href="#planes">Planes</a>
+      <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg><span>Pedir demo</span><span class="visually-hidden"> por WhatsApp</span></a>
     </div>
   </div>
 </header>
+
+<main>
 
 <!-- HERO -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">✦ Punto de venta con IA para restaurantes</div>
-      <h1 style="margin-top:16px">Tu restaurante, bajo control.<br><span class="hl">Desde el celular.</span></h1>
-      <p class="sub">El POS que lee las facturas de tus proveedores con una foto, te dice dónde estás perdiendo plata y te muestra tus ventas en tiempo real, estés donde estés.</p>
-      <div class="ctas">
-        <a class="btn btn-primary wa" href="#">Solicitar demo gratis <span>→</span></a>
-        <a class="btn btn-ghost" href="#diferente">Ver qué lo hace diferente</a>
+      <div class="hero-marca rev"><svg aria-hidden="true"><use href="#i-logo"/></svg><img src="/marca/lockup-claro.png" alt="SmartVente, AI-powered point of sales" width="1034" height="221"></div>
+      <h1 class="rev">Un POS que te dice dónde pierdes plata</h1>
+      <p class="lead rev d1">Facturación DIAN, comandas, inventario y con una foto a la factura, el costo real de cada plato. Para restaurantes en Colombia.</p>
+      <div class="ctas rev d2">
+        <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo por WhatsApp</a>
+        <a class="enlace" href="#planes">Ver planes y precios</a>
       </div>
-      <a href="/descargar/" class="client-dl">¿Ya eres cliente? <b>Descarga SmartVente →</b></a>
-      <div class="badges">
-        <span class="badge"><i></i>Facturación electrónica DIAN</span>
-        <span class="badge"><i></i>Sigue vendiendo sin internet</span>
-        <span class="badge"><i></i>Hecho en Colombia</span>
+      <div class="confianza rev d3" aria-label="Datos de confianza">
+        <span><svg aria-hidden="true"><use href="#i-ok"/></svg>Facturación electrónica DIAN con Factus</span>
+        <span><svg aria-hidden="true"><use href="#i-ok"/></svg>Sigue vendiendo sin internet</span>
+        <span><svg aria-hidden="true"><use href="#i-ok"/></svg>Hecho en Colombia por SmartLevels</span>
       </div>
     </div>
-    <div class="hero-visual">
-      <div class="scene">
-        <div class="phone"><div class="notch"></div><div class="screen">
-          <div style="display:flex;align-items:center;justify-content:space-between"><div class="s-title">Mi restaurante</div><span class="pill p-purple">3 sedes</span></div>
-          <div class="seg"><span class="a">Todas</span><span>Centro</span><span>Norte</span><span>Sur</span></div>
-          <div style="text-align:center;font-size:11px;color:#71717a;margin-top:14px">Hoy</div>
-          <div class="big">$4.280.000</div>
-          <div style="text-align:center;font-size:11px;color:#52525b">86 ventas · vs semana pasada <b style="color:#16a34a">▲ 12%</b></div>
-          <div class="bars"><i style="height:45%"></i><i style="height:60%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:88%"></i><i style="height:95%"></i><i class="t" style="height:78%"></i></div>
-          <div class="strip" style="background:rgba(59,130,246,.12);color:#1d4ed8"><span>POR SEDE</span><span>$4.280.000</span></div>
-          <div class="row" style="padding:5px 3px"><span>Centro</span><b>$2.050.000</b></div>
-          <div class="row" style="padding:5px 3px"><span>Norte</span><b>$1.390.000</b></div>
-          <div class="row" style="padding:5px 3px"><span>Sur</span><b>$840.000</b></div>
-          </div></div>
-        <div class="chip g l"><b>▲ 12%</b>vs. la semana pasada</div>
-        <div class="chip p r"><b>En vivo</b>desde tu celular</div>
-      </div>
+
+    <div class="atomo-wrap rev d3" id="atomo-wrap">
+      <canvas id="atomo" class="atomo" aria-label="El átomo de SmartVente: dos órbitas con tus datos girando alrededor de tu restaurante" role="img"></canvas>
+      <div class="chip" id="chip-a"><b>Caja cuadrada</b>arqueo del turno sin diferencias</div>
+      <div class="chip" id="chip-b"><b>$1.240.000 por pagar</b>a proveedores, con vencimientos</div>
+      <div class="chip" id="chip-c"><b>Contabilidad al día</b>lista para tu contador, sin digitar</div>
+      <p class="pie-ejemplo"><span class="solo-cursor">Mueve el cursor o </span><span class="solo-tacto">Arrastra y </span>gíralo. Cifras de ejemplo.</p>
     </div>
   </div>
 </section>
 
-<!-- LO QUE LO HACE DIFERENTE -->
-<section id="diferente" style="background:var(--bg2)">
+<!-- LO DE SIEMPRE -->
+<section class="siempre campo" aria-labelledby="t-siempre">
+  <svg class="orbitas-fondo" aria-hidden="true"><use href="#i-orbitas"/></svg>
+  <div class="wrap grid">
+    <h2 id="t-siempre" class="rev">Lo de siempre te está costando plata</h2>
+    <ol>
+      <li class="rev d1">La plata del restaurante y la del dueño se mezclan en la misma caja.<b><em>Con SmartVente:</em> cada gasto dice de quién es y si es deducible.</b></li>
+      <li class="rev d2">Lo que se le debe a cada proveedor vive en la cabeza de alguien, o en un cuaderno.<b><em>Con SmartVente:</em> cuentas por pagar con vencimientos y comprobantes de egreso.</b></li>
+      <li class="rev d3">A fin de mes el contador pide facturas, cierres y gastos, y nadie los tiene completos.<b><em>Con SmartVente:</em> los asientos salen solos y el contador recibe todo listo.</b></li>
+    </ol>
+  </div>
+</section>
+
+<!-- HISTORIA DEL PRODUCTO: el celular se queda fijo y cambia de pantalla mientras lees -->
+<section id="resultados" class="historia" aria-label="Qué resuelve SmartVente">
   <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">✦ Lo que lo hace diferente</div>
-      <h2 class="h2">Facturar lo hace cualquier POS.<br><span class="hl">Este te ayuda a ganar más.</span></h2>
-      <p class="lead">SmartVente no se queda en la caja: controla lo que compras, lo que te cuesta cada plato y lo que vendes, para que tomes decisiones con números reales.</p>
-    </div>
-
-    <div class="feature">
-      <div class="f-text">
-        <div class="tagline">Facturas con IA</div>
-        <h3>Deja de digitar facturas. <span class="hl">Tómales una foto.</span></h3>
-        <p>Tu equipo le toma una foto a la factura del proveedor desde el celular. La IA lee proveedor, NIT, productos, cantidades y precios; tú solo revisas y confirmas.</p>
-        <ul>
-          <li>Inventario y costos actualizados al confirmar</li>
-          <li>Aprende cómo escribe cada proveedor sus productos</li>
-          <li>Te avisa si el NIT, los totales o las unidades no cuadran</li>
-          <li>Separa los insumos de los gastos (aseo, gas, papelería)</li>
-        </ul>
-      </div>
-      <div class="scene">
-        <div class="phone"><div class="notch"></div><div class="screen">
-          <div class="s-title">Facturas por revisar</div><div class="s-sub">Subida desde el celular · hace 20 s</div>
-          <div class="receipt">
-            <div style="text-align:center;font-weight:700">DISTRIBUIDORA EL PRADO</div>
-            <div style="text-align:center">NIT 900.000.000-1 · FE 4821</div>
-            <div style="border-top:1px dashed #a1a1aa;margin:5px 0"></div>
-            <div class="rl"><span>QUESO MOZZ 5KG</span><span>142.500</span></div>
-            <div class="rl"><span>TOMATE CHONTO 10K</span><span>38.000</span></div>
-            <div class="rl"><span>ACEITE GIRASOL 3L</span><span>51.900</span></div>
-            <div class="rl"><span>PAN BRIOCHE X24</span><span>64.800</span></div>
-            <div style="border-top:1px dashed #a1a1aa;margin:5px 0"></div>
-            <div class="rl" style="font-weight:700"><span>TOTAL</span><span>297.200</span></div>
+    <div class="historia-grid">
+      <div class="pasos-h">
+        <article class="paso-h" data-paso="0">
+          <h2 class="rev">Deja de digitar facturas. Tómales una foto.</h2>
+          <p class="rev d1">Tu equipo le toma una foto a la factura del proveedor desde el celular, o sube el XML. La IA lee proveedor, NIT, productos, cantidades y precios; tú solo revisas y confirmas. Nada entra al inventario sin que una persona lo apruebe.</p>
+          <ul class="rev d2">
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Inventario y costos actualizados al confirmar</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Aprende cómo escribe cada proveedor sus productos</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Te avisa si el NIT, los totales o las unidades no cuadran</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Separa los insumos de los gastos (aseo, gas, papelería)</li>
+          </ul>
+          <p class="nota" style="margin-top:16px">Incluido en el plan Completo.</p>
+          <div class="escena-m">
+            <div class="lectura">
+              <div class="factura" data-ui aria-label="Factura de proveedor, de ejemplo">
+                <div class="cab">DISTRIBUIDORA EL PRADO<small>NIT 900.000.000-1 · Factura 4821</small></div>
+                <div class="sep"></div>
+                <div class="rl"><span>QUESO MOZZ 5KG</span><span>142.500</span></div>
+                <div class="rl"><span>TOMATE CHONTO 10K</span><span>38.000</span></div>
+                <div class="rl"><span>ACEITE GIRASOL 3L</span><span>51.900</span></div>
+                <div class="rl"><span>PAN BRIOCHE X24</span><span>64.800</span></div>
+                <div class="sep"></div>
+                <div class="rl total"><span>TOTAL</span><span>297.200</span></div>
+                <span class="sello">DE EJEMPLO</span>
+              </div>
+              <div class="phone"><div class="screen" data-ui>
+          <div class="s-top"><div class="s-title">Facturas por revisar</div><span class="pill v">Foto</span></div>
+          <div class="s-sub">Subida desde el celular · hace 20 s</div>
+          <div class="s-card lee">
+            <div class="row"><b>Distribuidora El Prado</b><span class="pill v">NIT ✓</span></div>
+            <div class="row"><span>Queso mozzarella · 5.000 g</span><span class="ok">✓</span></div>
+            <div class="row"><span>Tomate chonto · 10 kg</span><span class="ok">✓</span></div>
+            <div class="row"><span>Aceite girasol · 3 L</span><span class="ok">✓</span></div>
+            <div class="row"><span>Pan brioche · 24 und</span><span class="ok">✓</span></div>
           </div>
+          <div class="strip accion"><span>Registrar compra</span><span>$297.200</span></div>
           <div class="s-card">
-            <div class="row"><b>Distribuidora El Prado</b><span class="pill p-green">NIT ✓</span></div>
-            <div class="row"><span>Queso mozzarella · 5.000 g</span><span class="okc">✓</span></div>
-            <div class="row"><span>Tomate chonto · 10 kg</span><span class="okc">✓</span></div>
-            <div class="row"><span>Aceite girasol · 3 L</span><span class="okc">✓</span></div>
-            <div class="row"><span>Pan brioche · 24 und</span><span class="okc">✓</span></div>
+            <div class="row"><span>Inventario</span><b class="ok">actualizado</b></div>
+            <div class="row"><span>Costo del queso</span><b>$28.500 / kg</b></div>
+            <div class="row"><span>Margen hamburguesa</span><b>61%</b></div>
           </div>
-          <div class="strip" style="background:#7c3aed;color:#fff"><span>Registrar compra</span><span>$297.200</span></div>
+          <div class="ejemplo">Pantalla y cifras de ejemplo</div>
+<div class="tabs" aria-hidden="true"><span><i></i>Ventas</span><span><i></i>Inventario</span><span class="a"><i></i>Compras</span><span><i></i>Más</span></div>
         </div></div>
-        <div class="chip g l"><b>20 s</b>factura leída</div>
-        <div class="chip p r"><b>✓</b>inventario actualizado</div>
-      </div>
-    </div>
-
-    <div class="feature rev">
-      <div class="f-text">
-        <div class="tagline">Costos y proveedores</div>
-        <h3>¿Dónde estás <span class="or">perdiendo plata?</span> <span class="hl">SmartVente te lo dice.</span></h3>
-        <p>Cada compra actualiza el costo real de tus insumos y, con él, el costo y el margen de cada plato. Además compara lo que te cobra cada proveedor y calcula cuánto pudiste ahorrar.</p>
-        <ul>
-          <li>Costo y margen de cada plato, automáticos (con subrecetas)</li>
-          <li>Quién te vende más barato cada insumo</li>
-          <li>"Ahorro posible" del mes, en pesos</li>
-          <li>Pedidos sugeridos con el proveedor más barato</li>
-        </ul>
-      </div>
-      <div class="scene">
-        <div class="phone"><div class="notch"></div><div class="screen">
-          <div class="s-title">Comparar precios</div><div class="s-sub">Últimos 90 días · por kilo</div>
+            </div>
+            <p class="pie-ejemplo">Pantalla y cifras de ejemplo.</p>
+          </div>
+        </article>
+        <article class="paso-h" data-paso="1">
+          <h2 class="rev">Sabes qué plato te deja plata.</h2>
+          <p class="rev d1">Cada compra actualiza el costo real de tus insumos y, con él, el costo y el margen de cada plato, con subrecetas. Además compara lo que te cobra cada proveedor y calcula cuánto pudiste ahorrar comprando al más barato.</p>
+          <ul class="rev d2">
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Costo y margen de cada plato, automáticos</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Quién te vende más barato cada insumo</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Ahorro posible del mes, en pesos</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Pedidos sugeridos con el proveedor más barato</li>
+          </ul>
+          <div class="escena-m"><div class="phone"><div class="screen" data-ui>
+          <div class="s-top"><div class="s-title">Comparar precios</div><span class="pill">por kg</span></div>
+          <div class="s-sub">Queso mozzarella · últimos 90 días</div>
           <div class="s-card">
-            <div class="row"><b>Queso mozzarella</b><span class="pill p-purple">por kg</span></div>
-            <div class="row"><span>Lácteos Sur</span><span><span class="pill p-green">Más barato</span> <b>$26.400</b></span></div>
-            <div class="row"><span>Dist. El Prado</span><span><b>$28.900</b> <span style="color:#dc2626;font-size:10px">▲ 6%</span></span></div>
+            <div class="row"><span>Lácteos Sur</span><span><span class="pill v">Más barato</span> <b>$26.400</b></span></div>
+            <div class="row"><span>Dist. El Prado</span><span><b>$28.500</b> <span class="pill r">+8%</span></span></div>
             <div class="row"><span>Mercado Central</span><b>$30.100</b></div>
           </div>
-          <div class="s-card" style="background:#ecfdf5">
-            <div style="font-size:11px;color:#047857">Ahorro posible este mes</div>
-            <div style="font-size:26px;font-weight:800;color:#047857;letter-spacing:-.02em">$312.000</div>
-            <div style="font-size:10px;color:#059669">comprando cada vez al más barato</div>
+          <div class="s-card" style="background:#dcf3e4">
+            <div class="centro" style="color:var(--plata)">Ahorro posible este mes</div>
+            <div class="big" style="color:var(--plata)">$312.000</div>
+            <div class="centro" style="color:var(--plata)">comprando cada vez al más barato</div>
           </div>
           <div class="s-card">
-            <div class="row"><b>Hamburguesa clásica</b><span class="pill p-orange">receta</span></div>
+            <div class="row"><b>Hamburguesa clásica</b><span class="pill">receta</span></div>
             <div class="row"><span>Costo del plato</span><b>$9.850</b></div>
-            <div class="row"><span>Margen</span><b style="color:#16a34a">61%</b></div>
+            <div class="row"><span>Margen</span><b class="ok">61%</b></div>
           </div>
-        </div></div>
-        <div class="chip g l"><b>$312.000</b>ahorro posible</div>
-        <div class="chip o r"><b>61%</b>margen por plato</div>
+          <div class="ejemplo">Pantalla y cifras de ejemplo</div>
+<div class="tabs" aria-hidden="true"><span><i></i>Ventas</span><span class="a"><i></i>Inventario</span><span><i></i>Compras</span><span><i></i>Más</span></div>
+        </div></div><p class="pie-ejemplo">Pantalla y cifras de ejemplo.</p></div>
+        </article>
+        <article class="paso-h" data-paso="2">
+          <h2 class="rev">Tus ventas de hoy, en tu celular.</h2>
+          <p class="rev d1">Deja de llamar a la caja. El dashboard online te muestra las ventas en tiempo real desde cualquier lugar, sin instalar nada: un link propio de tu restaurante y tu PIN.</p>
+          <ul class="rev d2">
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Ventas del día, por fechas y comparadas con la semana pasada</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Varias sedes, consolidadas en una sola pantalla</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Tu personal sube facturas sin ver tus ventas</li>
+            <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Al dashboard solo viaja el total, la propina, la forma de pago y la hora de cada venta</li>
+          </ul>
+          <a class="btn btn-wa wa cta-inline rev d3" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo por WhatsApp</a>
+          <div class="escena-m"><div class="phone"><div class="screen" data-ui>
+        <div class="s-top"><div class="s-title">Mi restaurante</div><span class="pill">3 sedes</span></div>
+        <div class="seg"><span class="a">Todas</span><span>Centro</span><span>Norte</span><span>Sur</span></div>
+        <div class="centro" style="margin-top:14px">Hoy</div>
+        <div class="big">$4.280.000</div>
+        <div class="centro">86 ventas · <b class="ok">+12%</b> vs. semana pasada</div>
+        <div class="bars" aria-hidden="true"><i style="height:45%"></i><i style="height:60%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:88%"></i><i style="height:95%"></i><i class="t" style="height:78%"></i></div>
+        <div class="strip"><span>Por sede</span><span>$4.280.000</span></div>
+        <div class="row"><span>Centro</span><b>$2.050.000</b></div>
+        <div class="row"><span>Norte</span><b>$1.390.000</b></div>
+        <div class="row"><span>Sur</span><b>$840.000</b></div>
+        <div class="row"><span>Propinas</span><b>$214.000</b></div>
+        <div class="ejemplo">Pantalla y cifras de ejemplo</div>
+<div class="tabs" aria-hidden="true"><span class="a"><i></i>Ventas</span><span><i></i>Inventario</span><span><i></i>Compras</span><span><i></i>Más</span></div>
+      </div></div><p class="pie-ejemplo">Pantalla y cifras de ejemplo.</p></div>
+        </article>
+      </div>
+      <div class="fijo">
+        <div class="phone phone-fijo" aria-hidden="true">
+          <div class="screen pantalla" data-ui data-pantalla="0">
+          <div class="s-top"><div class="s-title">Facturas por revisar</div><span class="pill v">Foto</span></div>
+          <div class="s-sub">Subida desde el celular · hace 20 s</div>
+          <div class="s-card lee">
+            <div class="row"><b>Distribuidora El Prado</b><span class="pill v">NIT ✓</span></div>
+            <div class="row"><span>Queso mozzarella · 5.000 g</span><span class="ok">✓</span></div>
+            <div class="row"><span>Tomate chonto · 10 kg</span><span class="ok">✓</span></div>
+            <div class="row"><span>Aceite girasol · 3 L</span><span class="ok">✓</span></div>
+            <div class="row"><span>Pan brioche · 24 und</span><span class="ok">✓</span></div>
+          </div>
+          <div class="strip accion"><span>Registrar compra</span><span>$297.200</span></div>
+          <div class="s-card">
+            <div class="row"><span>Inventario</span><b class="ok">actualizado</b></div>
+            <div class="row"><span>Costo del queso</span><b>$28.500 / kg</b></div>
+            <div class="row"><span>Margen hamburguesa</span><b>61%</b></div>
+          </div>
+          <div class="ejemplo">Pantalla y cifras de ejemplo</div>
+<div class="tabs" aria-hidden="true"><span><i></i>Ventas</span><span><i></i>Inventario</span><span class="a"><i></i>Compras</span><span><i></i>Más</span></div>
+        </div>
+          <div class="screen pantalla" data-ui data-pantalla="1">
+          <div class="s-top"><div class="s-title">Comparar precios</div><span class="pill">por kg</span></div>
+          <div class="s-sub">Queso mozzarella · últimos 90 días</div>
+          <div class="s-card">
+            <div class="row"><span>Lácteos Sur</span><span><span class="pill v">Más barato</span> <b>$26.400</b></span></div>
+            <div class="row"><span>Dist. El Prado</span><span><b>$28.500</b> <span class="pill r">+8%</span></span></div>
+            <div class="row"><span>Mercado Central</span><b>$30.100</b></div>
+          </div>
+          <div class="s-card" style="background:#dcf3e4">
+            <div class="centro" style="color:var(--plata)">Ahorro posible este mes</div>
+            <div class="big" style="color:var(--plata)">$312.000</div>
+            <div class="centro" style="color:var(--plata)">comprando cada vez al más barato</div>
+          </div>
+          <div class="s-card">
+            <div class="row"><b>Hamburguesa clásica</b><span class="pill">receta</span></div>
+            <div class="row"><span>Costo del plato</span><b>$9.850</b></div>
+            <div class="row"><span>Margen</span><b class="ok">61%</b></div>
+          </div>
+          <div class="ejemplo">Pantalla y cifras de ejemplo</div>
+<div class="tabs" aria-hidden="true"><span><i></i>Ventas</span><span class="a"><i></i>Inventario</span><span><i></i>Compras</span><span><i></i>Más</span></div>
+        </div>
+          <div class="screen pantalla" data-ui data-pantalla="2">
+        <div class="s-top"><div class="s-title">Mi restaurante</div><span class="pill">3 sedes</span></div>
+        <div class="seg"><span class="a">Todas</span><span>Centro</span><span>Norte</span><span>Sur</span></div>
+        <div class="centro" style="margin-top:14px">Hoy</div>
+        <div class="big">$4.280.000</div>
+        <div class="centro">86 ventas · <b class="ok">+12%</b> vs. semana pasada</div>
+        <div class="bars" aria-hidden="true"><i style="height:45%"></i><i style="height:60%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:88%"></i><i style="height:95%"></i><i class="t" style="height:78%"></i></div>
+        <div class="strip"><span>Por sede</span><span>$4.280.000</span></div>
+        <div class="row"><span>Centro</span><b>$2.050.000</b></div>
+        <div class="row"><span>Norte</span><b>$1.390.000</b></div>
+        <div class="row"><span>Sur</span><b>$840.000</b></div>
+        <div class="row"><span>Propinas</span><b>$214.000</b></div>
+        <div class="ejemplo">Pantalla y cifras de ejemplo</div>
+<div class="tabs" aria-hidden="true"><span class="a"><i></i>Ventas</span><span><i></i>Inventario</span><span><i></i>Compras</span><span><i></i>Más</span></div>
+      </div>
+        </div>
+        <p class="pie-ejemplo">Pantalla y cifras de ejemplo.</p>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="feature">
-      <div class="f-text">
-        <div class="tagline">Dashboard online</div>
-        <h3>¿Cuánto vendiste hoy? <span class="hl">Míralo en tu celular.</span></h3>
-        <p>Deja de llamar a la caja. Tus ventas en tiempo real desde cualquier lugar, sin instalar nada: un link propio de tu restaurante y tu PIN.</p>
+<!-- EL FLUJO DE LA PLATA: de la venta al contador, cada peso con registro -->
+<section id="plata" class="plata oscuro" aria-labelledby="t-plata">
+  <svg class="orbitas-fondo" aria-hidden="true"><use href="#i-orbitas"/></svg>
+  <div class="wrap">
+    <div class="plata-cab">
+      <h2 id="t-plata">Cada peso queda registrado, de la caja a tu contador</h2>
+      <p class="lead suave">Un POS normal factura. SmartVente sigue la plata por todo el recorrido: lo que entra, lo que sale, lo que debes y lo que tu contador necesita. Toca cada paso.</p>
+    </div>
+    <ol class="flujo" aria-label="Recorrido del dinero en SmartVente">
+      <svg class="hilo" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 H1200" fill="none" stroke="rgba(196,168,255,.35)" stroke-width="2"/><path class="corre" d="M0 20 H1200" fill="none" stroke="#9b5bff" stroke-width="3" stroke-dasharray="26 22" stroke-linecap="round"/></svg>
+      <li><button type="button" aria-expanded="false"><b>Venta</b><span>Factura electrónica DIAN, notas crédito, pagos mixtos y propinas.</span></button><div class="mas" hidden>Cada venta nace con su documento ante la DIAN vía Factus. Con medio de pago, propina y hora. Y se ve en tu celular al instante.</div></li>
+      <li><button type="button" aria-expanded="false"><b>Caja y turnos</b><span>Cierre con arqueo, gastos en efectivo y retiros.</span></button><div class="mas" hidden>Quien cierra el turno cuenta y SmartVente compara: lo que debería haber contra lo que hay. Las diferencias quedan a la vista, no en una conversación.</div></li>
+      <li><button type="button" aria-expanded="false"><b>Gastos</b><span>Del restaurante o del dueño, deducibles o no.</span></button><div class="mas" hidden>Cada gasto dice de quién es y si va a la contabilidad. Nunca más la plata de la casa mezclada con la del negocio.</div></li>
+      <li><button type="button" aria-expanded="false"><b>Compras y proveedores</b><span>Facturas con foto, pedido vs. factura, cuentas por pagar.</span></button><div class="mas" hidden>La compra entra con una foto a la factura o con el XML; se compara con lo que pediste; queda la cuenta por pagar con su vencimiento y, al pagar, el comprobante de egreso. Incluye el documento soporte para compras a no obligados a facturar.</div></li>
+      <li><button type="button" aria-expanded="false"><b>Clientes y cartera</b><span>Crédito, abonos y listas de precios.</span></button><div class="mas" hidden>Ventas a crédito con su cartera y abonos, y precios por cliente para empresas o aliados. Sabes quién te debe y desde cuándo.</div></li>
+      <li><button type="button" aria-expanded="false"><b>Contabilidad</b><span>Asientos automáticos. Tu contador recibe todo listo.</span></button><div class="mas" hidden>Con el módulo de Contabilidad, ventas, compras, gastos y pagos generan sus asientos; retenciones, terceros, cierres y reportes de exógena quedan listos. Tu contador deja de perseguirte a fin de mes.</div></li>
+    </ol>
+    <div class="flujo-detalle" id="flujo-detalle" aria-live="polite"></div>
+    <div class="plata-pie">
+      <p class="nota">Contabilidad es un módulo de $60.000 al mes por sede y requiere el plan Completo. Los documentos electrónicos se pagan a Factus según volumen.</p>
+      <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- LO QUE NINGÚN EXCEL: 9 botones que muestran cada herramienta -->
+<section id="excel" class="excel" aria-labelledby="t-excel">
+  <div class="wrap">
+    <div class="excel-cab">
+      <h2 id="t-excel">Lo que ningún Excel te va a resolver</h2>
+      <p class="lead suave">Herramientas que nacen de restaurantes reales usando SmartVente todos los días. Toca una.</p>
+    </div>
+    <div class="excel-grid">
+      <div class="botones" role="tablist" aria-label="Funcionalidades">
+        <button type="button" role="tab" aria-selected="true" aria-controls="ex-p" id="ex-0" data-i="0">Conteo físico a ciegas</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-1" data-i="1">Contabilidad integrada <small>Módulo</small></button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-2" data-i="2">Gastos del negocio y del dueño</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-3" data-i="3">Pedido vs. factura <small>Completo</small></button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-4" data-i="4">Proveedores y cuentas por pagar <small>Completo</small></button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-5" data-i="5">Se cae el internet, tu caja no</button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-6" data-i="6"><svg class="logo-anim ico-carte" viewBox="0 0 146 146" aria-hidden="true"><rect width="146" height="146" rx="16" fill="#D9B23A"/><g class="o1" fill="none"><ellipse cx="73" cy="73" rx="54" ry="21.5" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="127" cy="73" r="6" fill="#0d0d0d"/></g><g class="o2" fill="none"><ellipse cx="73" cy="73" rx="21.5" ry="54" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="73" cy="19" r="6" fill="#0d0d0d"/></g><circle cx="73" cy="73" r="8" fill="none" stroke="#0d0d0d" stroke-width="7"/></svg>Menú digital y domicilios propios <small>SmartCarte</small></button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-7" data-i="7">Rappi y DiDi en tu caja <small>Módulo</small></button>
+        <button type="button" role="tab" aria-selected="false" aria-controls="ex-p" id="ex-8" data-i="8">Precios por cliente y crédito <small>Completo</small></button>
+      </div>
+      <div class="panel" id="ex-p" role="tabpanel" aria-live="polite">
+        <div class="panel-in">
+          <span class="tag" id="ex-tag"></span>
+          <h3 id="ex-t">Conteo físico a ciegas</h3>
+          <p id="ex-d">Tu equipo cuenta el inventario sin ver cuánto debería haber. Los faltantes salen a la luz de verdad.</p>
+          <div class="muestra" id="ex-m" data-ui></div>
+        </div>
+        <div class="barra-tiempo" aria-hidden="true"><i></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TODO LO DEMÁS -->
+<section class="todo" aria-labelledby="t-todo">
+  <div class="wrap">
+    <h2 id="t-todo" class="rev">Y todo lo que un POS debe tener</h2>
+    <p class="lead suave rev d1">Lo esencial del día a día, bien resuelto y en un solo sistema, en los dos planes salvo donde se indica.</p>
+    <div class="cols">
+      <div>
+        <h3>Salón y caja</h3>
         <ul>
-          <li>Ventas del día, por fechas y comparadas con la semana pasada</li>
-          <li>Por medio de pago, con propinas y el detalle de cada venta</li>
-          <li>Varias sedes, consolidadas en una sola pantalla</li>
-          <li>Tu personal sube facturas sin ver tus ventas</li>
+          <li>Mesas, pedidos y cuentas por mesa</li>
+          <li>Comandas a cocina e impresión en red</li>
+          <li>Menú con variantes y acompañantes</li>
+          <li>Turnos y cierre de caja con arqueo</li>
+          <li>Pagos mixtos, propinas y descuentos con permisos</li>
+          <li>Celulares y tablets conectados a tu red</li>
+          <li>Usuarios y permisos sin límite de cajas</li>
         </ul>
       </div>
-      <div class="scene">
-        <div class="phone"><div class="notch"></div><div class="screen">
-          <div class="s-title">Ventas por fechas</div><div class="s-sub">Este mes</div>
-          <div class="big" style="margin-top:14px">$96.400.000</div>
-          <div style="text-align:center;font-size:11px;color:#52525b">1.982 ventas · promedio diario $3.213.000</div>
-          <div class="bars" style="height:90px"><i style="height:40%"></i><i style="height:55%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:80%"></i><i style="height:96%"></i><i style="height:70%"></i><i style="height:44%"></i><i style="height:58%"></i><i style="height:66%"></i><i style="height:52%"></i><i style="height:84%"></i><i style="height:92%"></i><i class="t" style="height:75%"></i></div>
-          <div class="strip" style="background:rgba(139,92,246,.12);color:#6d28d9"><span>POR SEDE</span><span></span></div>
-          <div class="row" style="padding:5px 3px"><span>Centro</span><b>48%</b></div>
-          <div class="row" style="padding:5px 3px"><span>Norte</span><b>33%</b></div>
-          <div class="row" style="padding:5px 3px"><span>Sur</span><b>19%</b></div>
-        </div></div>
-        <div class="chip p l"><b>3 sedes</b>en una pantalla</div>
-        <div class="chip g r"><b>24/7</b>desde cualquier lugar</div>
+      <div>
+        <h3>Facturación y clientes</h3>
+        <ul>
+          <li>Facturación electrónica DIAN</li>
+          <li>Notas crédito y anulaciones</li>
+          <li>Documento soporte electrónico</li>
+          <li>Directorio de clientes con datos de la DIAN</li>
+          <li>Cartera de clientes a crédito y abonos</li>
+          <li>Listas de precios por cliente <small>Completo</small></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Inventario y reportes</h3>
+        <ul>
+          <li>Insumos, recetas, stock mínimo e ideal</li>
+          <li>Conteo físico a ciegas</li>
+          <li>Subrecetas y costo real por plato <small>Completo</small></li>
+          <li>Reportes de ventas, propinas y turnos</li>
+          <li>Reportes completos con Excel y PDF <small>Completo</small></li>
+          <li>Dashboard online <small>Completo</small></li>
+          <li>Academia SmartVente, capacitación y soporte por correo y chat</li>
+        </ul>
       </div>
     </div>
-    <p class="note center">Las cifras de las pantallas son de ejemplo.</p>
   </div>
 </section>
 
-<!-- MÁS DIFERENCIALES -->
-<section id="funcionalidades">
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona" class="pasos" aria-labelledby="t-pasos" style="background:var(--papel2)">
   <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">✦ Pensado para la operación real</div>
-      <h2 class="h2">Lo que ningún Excel <span class="hl">te va a resolver</span></h2>
-      <p class="lead">Herramientas que nacen de restaurantes reales usando SmartVente todos los días.</p>
-    </div>
-    <div class="grid">
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></svg></div>
-        <h4>Conteo físico "a ciegas"</h4><p>Tu equipo cuenta el inventario sin ver cuánto debería haber. Los faltantes salen a la luz de verdad.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
-        <h4>Contabilidad integrada <span class="ptag">Módulo</span></h4><p>Asientos automáticos de ventas, compras, gastos y pagos, retenciones, terceros y reportes de exógena. Tu contador recibe todo listo.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6"/><path d="M15 11h6M18 8v6"/></svg></div>
-        <h4>Gastos del negocio y del dueño</h4><p>Cada gasto dice si es del restaurante o del propietario, y si es deducible. Nunca más plata mezclada.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 12h18M3 17h10"/><path d="M17 15l2 2 3-3"/></svg></div>
-        <h4>Pedido vs. factura <span class="ptag">Plan Completo</span></h4><p>Compara lo que le pediste al proveedor con lo que te llegó y te facturó, línea por línea. Sin inventario duplicado.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div>
-        <h4>Proveedores y cuentas por pagar <span class="ptag">Plan Completo</span></h4><p>Compras a crédito, abonos, vencimientos y comprobantes de egreso. Sabes cuánto debes y a quién.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1"/><path d="M3 3l18 18"/></svg></div>
-        <h4>Se cae el internet, tu caja no</h4><p>La información vive en el computador de tu local: sigues vendiendo, y lo pendiente se envía cuando vuelve la conexión.</p></div>
-      <div class="card"><div class="ic" style="background:none"><svg viewBox="0 0 72 72" style="width:42px;height:42px" aria-label="SmartCarte">
-          <rect x="1.5" y="1.5" width="69" height="69" rx="16" fill="#D4AF37"/>
-          <g class="sc-ring-outer"><ellipse cx="36" cy="36" rx="24" ry="9" fill="none" stroke="#0f0e08" stroke-width="1" opacity=".35"/><circle cx="60" cy="36" r="3.5" fill="#0f0e08"/></g>
-          <g class="sc-ring-inner"><ellipse cx="36" cy="36" rx="10" ry="21" fill="none" stroke="#0f0e08" stroke-width="1" opacity=".28"/><circle cx="36" cy="15" r="2.8" fill="#0f0e08" opacity=".85"/></g>
-          <circle class="sc-pc" cx="36" cy="36" r="5.5" fill="#0f0e08"/><circle cx="36" cy="36" r="2.2" fill="#D4AF37"/></svg></div>
-        <h4>Menú digital con domicilios propios <span class="ptag">SmartCarte</span></h4><p>Con <a href="https://smartcarte.co" target="_blank" rel="noopener" style="color:#D4AF37;font-weight:600">SmartCarte</a> tus clientes piden desde tu menú digital y los pedidos y domicilios propios llegan directo a SmartVente, sin volver a digitarlos.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="1.5"/><circle cx="16" cy="12" r="1.5"/><circle cx="10" cy="18" r="1.5"/></svg></div>
-        <h4>Integraciones con Rappi y DiDi <span class="ptag">Módulo</span></h4><p>Si vendes por las apps de domicilios, nosotros te gestionamos esos pedidos desde SmartVente, en la misma caja.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
-        <h4>Precios por cliente y crédito <span class="ptag">Plan Completo</span></h4><p>Listas de precios para clientes especiales y ventas a crédito con su cartera y abonos.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ESTÁNDAR -->
-<section style="background:var(--bg2)">
-  <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">✦ Y por supuesto</div>
-      <h2 class="h2">Todo lo que esperas de un POS</h2>
-      <p class="lead">Lo esencial para operar tu restaurante, bien resuelto y en un solo sistema.</p>
-    </div>
-    <div class="std">
-      <div>Salón y mesas</div><div>Comandas a cocina e impresión</div><div>Facturación electrónica DIAN</div>
-      <div>Notas crédito</div><div>Pagos mixtos y propinas</div><div>Cierres de turno con arqueo</div>
-      <div>Inventario de insumos</div><div>Recetas por plato</div><div>Propinas y descuentos con permisos</div>
-      <div>Clientes y su historial</div><div>Usuarios, roles y permisos</div><div>Reportes de ventas, propinas y turnos</div>
+    <h2 id="t-pasos" class="rev">De la demo a vender, en tres pasos</h2>
+    <ol>
+      <li class="rev d1"><h3>Te mostramos SmartVente</h3><p>Una demo por videollamada o en tu local, con tu carta y tu forma de trabajar.</p></li>
+      <li class="rev d2"><h3>Lo dejamos configurado</h3><p>Instalamos la app, cargamos tu menú, recetas e insumos y conectamos tu facturación electrónica.</p></li>
+      <li class="rev d3"><h3>Empiezas a vender</h3><p>Capacitamos a tu equipo y te acompañamos con soporte. Tú te enfocas en tu restaurante.</p></li>
+    </ol>
+    <div class="cta-fila rev d3">
+      <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo por WhatsApp</a>
+      <span class="suave">Un computador con Windows o Mac, y listo.</span>
     </div>
   </div>
 </section>
 
 <!-- PLANES -->
-<section id="planes">
+<section id="planes" class="planes" aria-labelledby="t-planes">
   <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">✦ Planes y precios</div>
-      <h2 class="h2">Dos planes. Módulos solo <span class="hl">si los necesitas</span></h2>
-      <p class="lead">Precio por sede, al mes. Sin cobros por cajas, usuarios ni mesas. Incluye acompañamiento, capacitación y acceso a la Academia SmartVente.</p>
+    <div class="cab">
+      <h2 id="t-planes" class="rev">Dos planes, precio por sede</h2>
+      <p class="lead suave rev d1">Al mes, en pesos colombianos. Sin cobros por cajas, usuarios ni mesas. Los dos incluyen acompañamiento, capacitación y la Academia SmartVente.</p>
     </div>
 
     <div class="plans">
-      <div class="plan">
+      <div class="plan rev d1">
         <h3>Esencial</h3>
-        <p class="for">Para operar tu restaurante todos los días, con el inventario bajo control.</p>
-        <div class="price">$150.000 <small>/ mes</small></div>
-        <div class="per">por sede</div>
+        <p class="para">Para operar tu restaurante todos los días, con el inventario bajo control.</p>
+        <div class="precio">$150.000 <small>/ mes por sede</small></div>
         <ul>
-          <li>Salón, mesas y cuentas por mesa</li>
-          <li>Comandas a cocina e impresión</li>
-          <li>Turnos, caja y gastos en efectivo</li>
-          <li>Facturación electrónica DIAN y notas crédito</li>
-          <li>Documento soporte electrónico para tus compras</li>
-          <li>Inventario de insumos, recetas y conteo a ciegas</li>
-          <li>Clientes, cartera y directorio de proveedores</li>
-          <li>Reportes de ventas, propinas y turnos</li>
-          <li>Usuarios y permisos sin límite de cajas</li>
-          <li>Academia, acompañamiento y capacitación de 2 horas</li>
-          <li>Carga inicial de tu menú</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Salón, mesas y cuentas por mesa</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Comandas a cocina e impresión</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Turnos, caja y gastos en efectivo</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Facturación electrónica DIAN y notas crédito</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Documento soporte electrónico para tus compras</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Inventario de insumos, recetas y conteo a ciegas</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Clientes, cartera y directorio de proveedores</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Reportes de ventas, propinas y turnos</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Usuarios y permisos sin límite de cajas</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Academia, acompañamiento y capacitación de 2 horas</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Carga inicial de tu menú</li>
         </ul>
-        <a class="btn btn-ghost wa" href="#">Solicitar demo</a>
+        <a class="btn btn-sec wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo de Esencial</a>
       </div>
-      <div class="plan feat">
-        <span class="ribbon">Más completo</span>
+      <div class="plan rec rev d2">
         <h3>Completo</h3>
-        <p class="for">Todo lo de Esencial, más la administración que te ahorra tiempo y plata.</p>
-        <div class="price">$200.000 <small>/ mes</small></div>
-        <div class="per">por sede</div>
+        <div class="etiqueta">El plan recomendado</div>
+        <p class="para">Todo lo de Esencial, más la administración que te ahorra tiempo y plata.</p>
+        <div class="precio">$200.000 <small>/ mes por sede</small></div>
         <ul>
-          <li class="more">Todo lo de Esencial</li>
-          <li>Facturas de proveedor con IA, por foto o XML</li>
-          <li>Pedidos automáticos al mejor precio</li>
-          <li>Comparador de precios entre proveedores</li>
-          <li>Subrecetas y costo real por plato</li>
-          <li>Proveedores, cuentas por pagar y comprobantes de egreso</li>
-          <li>Listas de precios por cliente</li>
-          <li>Dashboard online con tus ventas en el celular</li>
-          <li>Reportes completos con exportación a Excel y PDF</li>
-          <li>Acompañamiento personalizado y carga de variantes y recetas</li>
+          <li class="mas"><svg aria-hidden="true"><use href="#i-mas"/></svg>Todo lo de Esencial</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Facturas de proveedor con IA, por foto o XML</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Pedidos automáticos al mejor precio</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Comparador de precios entre proveedores</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Subrecetas y costo real por plato</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Proveedores, cuentas por pagar y comprobantes de egreso</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Listas de precios por cliente</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Dashboard online con tus ventas en el celular</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Reportes completos con exportación a Excel y PDF</li>
+          <li><svg aria-hidden="true"><use href="#i-ok"/></svg>Acompañamiento personalizado y carga de variantes y recetas</li>
         </ul>
-        <a class="btn btn-primary wa" href="#">Solicitar demo <span>→</span></a>
+        <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo de Completo</a>
       </div>
     </div>
-    <p class="note center" style="margin-top:16px">Los documentos electrónicos (facturas, notas y documento soporte) se pagan directamente al proveedor tecnológico Factus, según tu volumen.</p>
+    <p class="nota rev" style="margin-top:16px">Los documentos electrónicos (facturas, notas y documento soporte) se pagan directamente al proveedor tecnológico Factus, según tu volumen.</p>
 
-    <div class="sub-h center">Módulos que se suman</div>
-    <div class="mods">
-      <div class="mod"><div class="k">Contabilidad</div><h4>Tu contador recibe todo listo</h4>
-        <div class="mp">$60.000 <small>/ mes por sede</small></div>
-        <p>Asientos automáticos de ventas, compras, gastos y pagos, retenciones, terceros, cierres y reportes de exógena.</p>
+    <div class="modulos">
+      <h3 class="rev">Módulos que se suman, solo si los necesitas</h3>
+      <div class="modulo rev d1"><h3>Contabilidad</h3><div class="mp">$60.000 <small>/ mes por sede</small></div>
+        <p>Asientos automáticos de ventas, compras, gastos y pagos, retenciones, terceros, cierres y reportes de exógena. Tu contador recibe todo listo.</p>
         <div class="req">Requiere plan Completo</div></div>
-      <div class="mod"><div class="k">Plataformas de domicilio</div><h4>Rappi y DiDi en tu misma caja</h4>
-        <div class="mp">$40.000 <small>/ mes por sede</small></div>
-        <p>Los pedidos de las apps llegan a SmartVente y a cocina, sin volver a digitarlos.</p>
+      <div class="modulo rev d2"><h3>Plataformas de domicilio</h3><div class="mp">$40.000 <small>/ mes por sede</small></div>
+        <p>Los pedidos de Rappi y DiDi llegan a SmartVente y a cocina, sin volver a digitarlos.</p>
         <div class="req">Disponible en ambos planes</div></div>
-      <div class="mod"><div class="k">Multisede</div><h4>Todas tus sedes, una pantalla</h4>
-        <div class="mp">−20% <small>por cada sede adicional</small></div>
+      <div class="modulo rev d3"><h3>Multisede</h3><div class="mp">−20% <small>por cada sede adicional</small></div>
         <p>Ventas consolidadas y por sede, y directorio de clientes y proveedores compartido. Cada sede conserva su acceso.</p>
         <div class="req">Requiere plan Completo</div></div>
+      <div class="modulo mitad rev d1"><h3><svg class="logo-anim logo-mod" viewBox="0 0 146 146" role="img" aria-label=""><rect width="146" height="146" rx="16" fill="#D9B23A"/><g class="o1" fill="none"><ellipse cx="73" cy="73" rx="54" ry="21.5" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="127" cy="73" r="6" fill="#0d0d0d"/></g><g class="o2" fill="none"><ellipse cx="73" cy="73" rx="21.5" ry="54" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="73" cy="19" r="6" fill="#0d0d0d"/></g><circle cx="73" cy="73" r="8" fill="none" stroke="#0d0d0d" stroke-width="7"/></svg><span class="marca-app" aria-label="SmartCarte"><b>Smart</b><span class="carte">Carte</span></span></h3><div class="mp">−20% <small>al sumarlo a tu plan SmartVente</small></div>
+        <p>Menú digital y domicilios propios con pagos por QR y WhatsApp. Los pedidos llegan directo a SmartVente, sin volver a digitarlos.</p>
+        <div class="req">Disponible en ambos planes · <a class="enlace-carte" href="https://smartcarte.co" target="_blank" rel="noopener">Conocer SmartCarte →</a></div></div>
+      <div class="modulo mitad rev d2"><h3><svg class="logo-anim logo-mod" viewBox="0 0 146 146" role="img" aria-label=""><rect width="146" height="146" rx="16" fill="#3694D4"/><g class="o1" fill="none"><ellipse cx="73" cy="73" rx="54" ry="21.5" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="127" cy="73" r="6" fill="#0d0d0d"/></g><g class="o2" fill="none"><ellipse cx="73" cy="73" rx="21.5" ry="54" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="73" cy="19" r="6" fill="#0d0d0d"/></g><circle cx="73" cy="73" r="8" fill="none" stroke="#0d0d0d" stroke-width="7"/></svg><span class="marca-app" aria-label="SmartChats"><b>Smart</b><span class="chats">Chats</span></span></h3><div class="mp">−20% <small>al sumarlo a tu plan SmartVente</small></div>
+        <p>Chatbot multicanal con IA: WhatsApp, Instagram, Messenger, Telegram y el chat de tu web en un solo panel. El bot responde y tu equipo toma el control cuando hace falta.</p>
+        <div class="req">Disponible en ambos planes · <a class="enlace" href="https://www.smartchats.co" target="_blank" rel="noopener">Conocer SmartChats →</a></div></div>
     </div>
-    <p class="note center" style="margin-top:14px">Menú digital y domicilios propios con pagos por QR y WhatsApp: <a href="https://smartcarte.co" target="_blank" rel="noopener" style="color:#D4AF37;font-weight:600">SmartCarte</a>, con tarifa preferencial para clientes SmartVente Completo.</p>
 
-    <div class="sub-h center">Qué lleva cada plan</div>
-    <div class="cmp-wrap">
-    <table class="cmp">
-      <thead><tr><th></th><th class="c">Esencial</th><th class="c">Completo</th></tr></thead>
-      <tbody>
-        <tr class="g"><td colspan="3">Operación del salón</td></tr>
-        <tr><td>Mesas, pedidos y cuentas por mesa</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Pantalla de cocina y comandas por zona</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Impresión en red, varias impresoras</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Menú con variantes, modificadores y acompañantes</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Propinas y descuentos con permisos por rol</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Usuarios y permisos, sin límite de cajas</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Celulares y tablets conectados a tu red</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr class="g"><td colspan="3">Caja y ventas</td></tr>
-        <tr><td>Turnos y cierre de caja con arqueo</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Gastos en efectivo y retiros de caja</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Facturación electrónica DIAN y notas crédito</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Anulación de venta con nota crédito</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Pagos mixtos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr class="g"><td colspan="3">Clientes</td></tr>
-        <tr><td>Directorio de clientes con datos de la DIAN</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Cartera de clientes a crédito y abonos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Listas de precios por cliente</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr class="g"><td colspan="3">Inventario y compras</td></tr>
-        <tr><td>Insumos, recetas, stock mínimo e ideal</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Conteo físico a ciegas y movimientos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Directorio de proveedores y compras a mano</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Documento soporte electrónico (compras a no obligados a facturar)</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Facturas de proveedor con IA, por foto o XML</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Pedidos automáticos al mejor precio</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Comparador de precios entre proveedores</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Subrecetas (insumos producidos por lotes)</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Pedido vs. factura, línea por línea</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Cuentas por pagar, pagos y comprobantes de egreso</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Estado de cuenta del proveedor</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr class="g"><td colspan="3">Reportes y control</td></tr>
-        <tr><td>Reportes de ventas, propinas y turnos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Reportes completos con exportación a Excel y PDF</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Dashboard online con ventas en tiempo real</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr class="g"><td colspan="3">Acompañamiento</td></tr>
-        <tr><td>Academia SmartVente: manual en línea, guías y videos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Acompañamiento en la puesta en marcha</td><td class="c t">Sesión guiada</td><td class="c t">Personalizado con tu equipo</td></tr>
-        <tr><td>Capacitación de tu equipo</td><td class="c t">2 horas</td><td class="c t">Ampliada</td></tr>
-        <tr><td>Carga inicial de productos, categorías y precios</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr><td>Carga de variantes y recetas</td><td class="c n">—</td><td class="c y">✓</td></tr>
-        <tr><td>Soporte por correo y chat</td><td class="c y">✓</td><td class="c y">✓</td></tr>
-        <tr class="g"><td colspan="3">Módulos que se suman</td></tr>
-        <tr><td>Contabilidad</td><td class="c n">No disponible</td><td class="c t">+$60.000 / mes</td></tr>
-        <tr><td>Plataformas de domicilio (Rappi y DiDi)</td><td class="c t">+$40.000 / mes</td><td class="c t">+$40.000 / mes</td></tr>
-        <tr><td>Multisede</td><td class="c n">No disponible</td><td class="c t">−20% por sede adicional</td></tr>
-      </tbody>
-    </table>
+    <!-- Calculadora -->
+    <div class="calc rev" id="calculadora">
+      <h3>Arma tu plan y mira el precio</h3>
+      <div>
+        <fieldset>
+          <legend>Plan</legend>
+          <div class="opciones">
+            <label class="op"><input type="radio" name="plan" value="esencial"> Esencial · $150.000</label>
+            <label class="op"><input type="radio" name="plan" value="completo" checked> Completo · $200.000</label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Sedes</legend>
+          <div class="sedes">
+            <button type="button" id="menos" aria-label="Una sede menos">−</button>
+            <output id="n-sedes" for="menos mas">1 sede</output>
+            <button type="button" id="mas" aria-label="Una sede más">+</button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Módulos</legend>
+          <div class="opciones">
+            <label class="op"><input type="checkbox" name="mod" value="contabilidad"> Contabilidad · $60.000</label>
+            <label class="op"><input type="checkbox" name="mod" value="domicilios"> Rappi y DiDi · $40.000</label>
+          </div>
+        </fieldset>
+      </div>
+      <div class="total" aria-live="polite">
+        <div class="suave" style="font-weight:700;color:var(--tinta2-sobre-oscuro)">Tu plan, al mes</div>
+        <div class="cifra" id="total">$200.000 <small>/ mes</small></div>
+        <div class="desglose" id="desglose"></div>
+        <div class="aviso" id="aviso"></div>
+        <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo por WhatsApp</a>
+        <p class="nota">Estimado con los precios publicados. El descuento multisede se aplica al plan; los documentos electrónicos de Factus van aparte. Te confirmamos el valor final en la demo.</p>
+      </div>
     </div>
-    <p class="note center">Precios por sede, en pesos colombianos. Los documentos electrónicos de Factus se pagan aparte.</p>
+
+    <details class="comparativo">
+      <summary><svg aria-hidden="true"><use href="#i-abajo"/></svg>Ver en detalle qué lleva cada plan</summary>
+      <div class="cmp-wrap">
+      <table class="cmp">
+        <thead><tr><th scope="col"><span class="visually-hidden">Función</span></th><th scope="col" class="c">Esencial</th><th scope="col" class="c">Completo</th></tr></thead>
+        <tbody>
+          <tr class="g"><td colspan="3">Operación del salón</td></tr>
+          <tr><td>Mesas, pedidos y cuentas por mesa</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Pantalla de cocina y comandas por zona</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Impresión en red, varias impresoras</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Menú con variantes, modificadores y acompañantes</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Propinas y descuentos con permisos por rol</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Usuarios y permisos, sin límite de cajas</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Celulares y tablets conectados a tu red</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr class="g"><td colspan="3">Caja y ventas</td></tr>
+          <tr><td>Turnos y cierre de caja con arqueo</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Gastos en efectivo y retiros de caja</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Facturación electrónica DIAN y notas crédito</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Anulación de venta con nota crédito</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Pagos mixtos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr class="g"><td colspan="3">Clientes</td></tr>
+          <tr><td>Directorio de clientes con datos de la DIAN</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Cartera de clientes a crédito y abonos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Listas de precios por cliente</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr class="g"><td colspan="3">Inventario y compras</td></tr>
+          <tr><td>Insumos, recetas, stock mínimo e ideal</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Conteo físico a ciegas</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Directorio de proveedores y compras a mano</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Documento soporte electrónico (compras a no obligados a facturar)</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Facturas de proveedor con IA, por foto o XML</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Pedidos automáticos al mejor precio</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Comparador de precios entre proveedores</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Subrecetas (insumos producidos por lotes)</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Pedido vs. factura, línea por línea</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Cuentas por pagar, pagos y comprobantes de egreso</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Estado de cuenta del proveedor</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr class="g"><td colspan="3">Reportes y control</td></tr>
+          <tr><td>Reportes de ventas, propinas y turnos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Reportes completos con exportación a Excel y PDF</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Dashboard online con ventas en tiempo real</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr class="g"><td colspan="3">Acompañamiento</td></tr>
+          <tr><td>Academia SmartVente: manual en línea, guías y videos</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Acompañamiento en la puesta en marcha</td><td class="c">Sesión guiada</td><td class="c">Personalizado con tu equipo</td></tr>
+          <tr><td>Capacitación de tu equipo</td><td class="c">2 horas</td><td class="c">Ampliada</td></tr>
+          <tr><td>Carga inicial de productos, categorías y precios</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr><td>Carga de variantes y recetas</td><td class="c n">—</td><td class="c y">✓</td></tr>
+          <tr><td>Soporte por correo y chat</td><td class="c y">✓</td><td class="c y">✓</td></tr>
+          <tr class="g"><td colspan="3">Módulos que se suman</td></tr>
+          <tr><td>Contabilidad</td><td class="c n">No disponible</td><td class="c">+$60.000 / mes</td></tr>
+          <tr><td>Plataformas de domicilio (Rappi y DiDi)</td><td class="c">+$40.000 / mes</td><td class="c">+$40.000 / mes</td></tr>
+          <tr><td>Multisede</td><td class="c n">No disponible</td><td class="c">−20% por sede adicional</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="nota" style="margin-top:12px">Precios por sede, en pesos colombianos. Los documentos electrónicos de Factus se pagan aparte.</p>
+    </details>
   </div>
 </section>
 
-<!-- CÓMO FUNCIONA -->
-<section id="como-funciona" style="background:var(--bg2)">
+<!-- OBJECIONES -->
+<section class="dudas oscuro" aria-labelledby="t-dudas">
+  <svg class="orbitas-fondo" aria-hidden="true"><use href="#i-orbitas"/></svg>
   <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">✦ Cómo funciona</div>
-      <h2 class="h2">De la demo a vender, <span class="hl">sin complicaciones</span></h2>
-    </div>
-    <div class="steps">
-      <div class="step"><div class="n">01</div><h4>Te mostramos SmartVente</h4><p>Una demo por videollamada o en tu local, con tu carta y tu forma de trabajar.</p></div>
-      <div class="step"><div class="n">02</div><h4>Lo dejamos configurado</h4><p>Instalamos la app, cargamos tu menú, recetas e insumos, y conectamos tu facturación electrónica.</p></div>
-      <div class="step"><div class="n">03</div><h4>Empiezas a vender</h4><p>Capacitamos a tu equipo y te acompañamos con soporte. Tú te enfocas en tu restaurante.</p></div>
+    <h2 id="t-dudas" class="rev">Lo que te preocupa, resuelto</h2>
+    <div class="grid">
+      <div class="rev d1"><h3>«Cambiar de sistema es un lío»</h3><p>Nosotros instalamos la app, cargamos tu menú, recetas e insumos, conectamos la facturación electrónica y capacitamos a tu equipo. Tú no digitas nada para empezar.</p></div>
+      <div class="rev d2"><h3>«¿Y si se va el internet?»</h3><p>Sigues vendiendo. La información vive en el computador de tu local; lo que necesita internet, como enviar facturas electrónicas o actualizar el dashboard, sale cuando vuelve la conexión.</p></div>
+      <div class="rev d3"><h3>«¿Dónde quedan mis datos?»</h3><p>En el computador de tu restaurante. Al dashboard online solo viajan el total, la propina, la forma de pago y la hora de cada venta; no se envían productos, clientes ni mesas.</p></div>
+      <div class="rev d4"><h3>«No sé de tecnología ni de contabilidad»</h3><p>No hace falta. SmartVente está pensado para el día a día de un restaurante, te acompañamos en la configuración y la parte contable queda lista para tu contador.</p></div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section id="faq">
+<section id="faq" aria-labelledby="t-faq">
   <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">✦ Preguntas frecuentes</div>
-      <h2 class="h2">Resolvemos tus dudas</h2>
-    </div>
-    <div class="faq">
-      <details><summary>¿Cuánto cuesta SmartVente?</summary><p>Esencial cuesta $150.000 al mes por sede y Completo $200.000. Los módulos de Contabilidad ($60.000) y Plataformas de domicilio ($40.000) se suman si los necesitas, y cada sede adicional tiene 20% de descuento. No cobramos por cajas, usuarios ni mesas.</p></details>
-      <details><summary>¿Qué incluyen el acompañamiento y la capacitación?</summary><p>Los dos planes incluyen la Academia SmartVente (manual en línea, guías y videos), el acompañamiento para arrancar, la capacitación de tu equipo y la carga inicial de tu menú. En Completo, además, cargamos tus variantes y recetas.</p></details>
-      <details><summary>¿Puedo cambiar de plan?</summary><p>Sí. Puedes empezar con Esencial y pasar a Completo cuando quieras sumar facturas con IA, proveedores y dashboard.</p></details>
-      <details><summary>¿Qué equipos necesito?</summary><p>Un computador con Windows o Mac donde se instala SmartVente. Los celulares y tablets del local pueden tomar pedidos desde el navegador, conectados a la misma red. Funciona con impresoras térmicas de tickets y comandas.</p></details>
-      <details><summary>¿Qué pasa si se va el internet?</summary><p>Sigues vendiendo: la información vive en el computador de tu local. Lo que necesita internet, como enviar facturas electrónicas o actualizar el dashboard, se envía cuando vuelve la conexión.</p></details>
-      <details><summary>¿Incluye facturación electrónica?</summary><p>Sí, en los dos planes. SmartVente emite facturas electrónicas, notas crédito y documento soporte ante la DIAN a través de Factus, un proveedor tecnológico autorizado. Los documentos electrónicos los pagas directamente a Factus según tu volumen. Te ayudamos con la configuración y los rangos de numeración.</p></details>
-      <details><summary>¿Cómo funciona la lectura de facturas con IA?</summary><p>Le tomas una foto a la factura del proveedor desde el celular. La IA lee proveedor, productos, cantidades y precios, y SmartVente te la deja lista para revisar. Nada entra al inventario sin que una persona lo confirme.</p></details>
-      <details><summary>¿Puedo ver varias sedes juntas?</summary><p>Sí. Con el plan Completo y Multisede ves las ventas de todas tus sedes consolidadas y por separado en una sola pantalla, y cada sede mantiene su propio acceso.</p></details>
-      <details><summary>¿Dónde quedan mis datos?</summary><p>En el computador de tu restaurante. Al dashboard online solo viajan el total, la propina, la forma de pago y la hora de cada venta; no se envían productos, clientes ni mesas.</p></details>
-      <details><summary>¿Necesito saber de tecnología o contabilidad?</summary><p>No. SmartVente está pensado para el día a día de un restaurante. Te acompañamos en la configuración, y la parte contable queda lista para tu contador.</p></details>
+    <h2 id="t-faq" class="rev">Preguntas frecuentes</h2>
+    <div class="faq rev d1" style="margin-top:32px">
+      <details><summary>¿Cuánto cuesta SmartVente?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Esencial cuesta $150.000 al mes por sede y Completo $200.000. Los módulos de Contabilidad ($60.000) y Plataformas de domicilio ($40.000) se suman si los necesitas, y cada sede adicional tiene 20% de descuento. No cobramos por cajas, usuarios ni mesas.</p></details>
+      <details><summary>¿Qué incluyen el acompañamiento y la capacitación?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Los dos planes incluyen la Academia SmartVente (manual en línea, guías y videos), el acompañamiento para arrancar, la capacitación de tu equipo y la carga inicial de tu menú. En Completo, además, cargamos tus variantes y recetas.</p></details>
+      <details><summary>¿Puedo cambiar de plan?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Sí. Puedes empezar con Esencial y pasar a Completo cuando quieras sumar facturas con IA, proveedores y dashboard.</p></details>
+      <details><summary>¿Qué equipos necesito?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Un computador con Windows o Mac donde se instala SmartVente. Los celulares y tablets del local pueden tomar pedidos desde el navegador, conectados a la misma red. Funciona con impresoras térmicas de tickets y comandas.</p></details>
+      <details><summary>¿Incluye facturación electrónica?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Sí, en los dos planes. SmartVente emite facturas electrónicas, notas crédito y documento soporte ante la DIAN a través de Factus, un proveedor tecnológico autorizado. Los documentos electrónicos los pagas directamente a Factus según tu volumen. Te ayudamos con la configuración y los rangos de numeración.</p></details>
+      <details><summary>¿Cómo funciona la lectura de facturas con IA?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Le tomas una foto a la factura del proveedor desde el celular, o subes el XML. La IA lee proveedor, productos, cantidades y precios, y SmartVente te la deja lista para revisar. Nada entra al inventario sin que una persona lo confirme.</p></details>
+      <details><summary>¿Puedo ver varias sedes juntas?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>Sí. Con el plan Completo y Multisede ves las ventas de todas tus sedes consolidadas y por separado en una sola pantalla, y cada sede mantiene su propio acceso.</p></details>
+      <details><summary>¿Ya soy cliente? ¿Dónde descargo la app?<svg aria-hidden="true"><use href="#i-mas"/></svg></summary><p>En <a class="enlace" href="/descargar/">smartvente.co/descargar</a> está el instalador para Windows y Mac. El dashboard online está en <a class="enlace" href="https://dash.smartvente.co" target="_blank" rel="noopener">dash.smartvente.co</a>.</p></details>
     </div>
   </div>
 </section>
 
 <!-- CTA FINAL -->
-<section style="padding-top:20px">
-  <div class="wrap">
-    <div class="final">
-      <h2>Tu restaurante, bajo control.<br><span class="hl">Empieza hoy.</span></h2>
-      <p>Escríbenos y te mostramos SmartVente funcionando con la operación de tu restaurante.</p>
-      <a class="btn btn-primary wa" href="#">Solicitar demo gratis <span>→</span></a>
+<section class="final" aria-labelledby="t-final">
+  <svg class="orbitas-fondo" aria-hidden="true"><use href="#i-orbitas"/></svg>
+  <div class="wrap grid">
+    <div>
+      <h2 id="t-final" class="rev">Pide tu demo por WhatsApp</h2>
+      <p class="rev d1">Te mostramos SmartVente funcionando con la carta y la operación de tu restaurante, por videollamada o en tu local. Gratis.</p>
+    </div>
+    <div class="rev d2">
+      <a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Escribir por WhatsApp</a>
+      <p class="numero">O guarda el número: <a class="wa" href="#">+57 333 272 1359</a></p>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="wrap">
     <div class="foot">
       <div>
-        <a href="#" class="logo" aria-label="SmartVente" style="display:inline-flex">
-          <svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#8b5cf6"/>
-            <g class="orbit-cw"><ellipse cx="50" cy="50" rx="13" ry="30" fill="none" stroke="#1e0a3c" stroke-width="1.8" opacity="0.85"/><circle cx="50" cy="20" r="4.5" fill="#1e0a3c"/></g>
-            <g class="orbit-ccw"><ellipse cx="50" cy="50" rx="13" ry="30" fill="none" stroke="#1e0a3c" stroke-width="1.8" opacity="0.85"/><circle cx="50" cy="80" r="4" fill="#1e0a3c"/></g>
-            <circle cx="50" cy="50" r="8.5" fill="#1e0a3c"/><circle cx="50" cy="50" r="4" fill="#8b5cf6"/></svg>
-          <div><div class="name">Smart<span>Vente</span></div><div class="tag">AI-POWERED POS</div></div>
-        </a>
-        <p style="margin-top:14px;max-width:360px">Punto de venta con inteligencia artificial para restaurantes, cafés y bares. Hecho en Colombia.</p>
+        <a href="#" class="logo" aria-label="SmartVente"><svg aria-hidden="true"><use href="#i-logo"/></svg><img class="wordmark" src="/marca/wordmark-claro.png" alt="SmartVente" width="1034" height="151"></a>
+        <p>Punto de venta con inteligencia artificial para restaurantes, cafés y bares. Hecho en Colombia por <a class="enlace" href="https://www.smartlevels.co" target="_blank" rel="noopener">SmartLevels</a>.</p>
       </div>
       <div>
-        <h5>Producto</h5>
-        <a href="#diferente">Lo diferente</a>
-        <a href="#funcionalidades">Funcionalidades</a>
-        <a href="#planes">Planes y precios</a>
+        <h3>Producto</h3>
+        <a href="#resultados">Qué resuelve</a>
         <a href="#como-funciona">Cómo funciona</a>
+        <a href="#planes">Planes y precios</a>
         <a href="#faq">Preguntas frecuentes</a>
       </div>
       <div>
-        <h5>Clientes</h5>
+        <h3>Clientes</h3>
         <a href="/descargar/">Descargar SmartVente</a>
         <a href="https://dash.smartvente.co" target="_blank" rel="noopener">Dashboard online</a>
         <a class="wa" href="#">Soporte por WhatsApp</a>
+        <a href="https://smartcarte.co" target="_blank" rel="noopener"><svg class="logo-anim ico-carte" viewBox="0 0 146 146" aria-hidden="true"><rect width="146" height="146" rx="16" fill="#D9B23A"/><g class="o1" fill="none"><ellipse cx="73" cy="73" rx="54" ry="21.5" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="127" cy="73" r="6" fill="#0d0d0d"/></g><g class="o2" fill="none"><ellipse cx="73" cy="73" rx="21.5" ry="54" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="73" cy="19" r="6" fill="#0d0d0d"/></g><circle cx="73" cy="73" r="8" fill="none" stroke="#0d0d0d" stroke-width="7"/></svg>SmartCarte, menú digital</a>
       </div>
     </div>
+    <div class="nombre-grande" aria-hidden="true"><svg class="logo-grande"><use href="#i-logo"/></svg><img src="/marca/lockup-claro.png" alt="" width="1034" height="221"></div>
     <div class="copy">
       <span>© <span id="yr">2026</span> SmartVente · Todos los derechos reservados</span>
-      <span>Powered by <a href="https://www.smartlevels.co" target="_blank" rel="noopener">SmartLevels</a></span>
+      <span>Un producto de <a href="https://www.smartlevels.co" target="_blank" rel="noopener">SmartLevels</a> · Colombia</span>
     </div>
   </div>
 </footer>
+
+<div class="barra" id="barra"><a class="btn btn-wa wa" href="#"><svg aria-hidden="true"><use href="#i-wa"/></svg>Pedir demo por WhatsApp</a></div>
 
 <script>
   // Mismo WhatsApp que el resto del ecosistema SmartLevels.
   var WA = 'https://wa.me/573332721359?text=' + encodeURIComponent('Hola, quiero una demo de SmartVente')
   document.querySelectorAll('a.wa').forEach(function (a) { a.href = WA; a.target = '_blank'; a.rel = 'noopener' })
   document.getElementById('yr').textContent = new Date().getFullYear()
+
+  document.documentElement.classList.add('js')
+  // Barra de progreso de lectura y parallax suave de las órbitas de fondo (un solo listener, con rAF)
+  ;(function () { var fondos = document.querySelectorAll('.orbitas-fondo'), pend = false, red = matchMedia('(prefers-reduced-motion: reduce)').matches
+    function pinta () { pend = false; var h = document.documentElement; document.documentElement.style.setProperty('--leido', Math.min(1, scrollY / (h.scrollHeight - innerHeight)).toFixed(3))
+      if (!red) fondos.forEach(function (f) { var r = f.parentElement.getBoundingClientRect(); f.style.transform = 'translateY(' + ((r.top + r.height / 2 - innerHeight / 2) * -0.08).toFixed(1) + 'px) rotate(' + (scrollY * 0.01).toFixed(2) + 'deg)' }) }
+    addEventListener('scroll', function () { if (!pend) { pend = true; requestAnimationFrame(pinta) } }, { passive: true }); pinta() })()
+  // El logo de la cabecera aparece cuando el grande del hero sale de pantalla
+  var cab = document.querySelector('header'), marca = document.querySelector('.hero-marca')
+  if (cab && marca && 'IntersectionObserver' in window) new IntersectionObserver(function (es) { cab.classList.toggle('arriba', es[0].isIntersecting) }, { rootMargin: '-72px 0px 0px 0px' }).observe(marca)
+
+  // Barra fija en celular: aparece cuando el botón del hero sale de pantalla.
+  var barra = document.getElementById('barra'), heroBtn = document.querySelector('.hero .btn-wa'), final = document.querySelector('.final')
+  if (barra && heroBtn && 'IntersectionObserver' in window) {
+    var heroVisible = true, finalVisible = false
+    function pinta () { var ver = !heroVisible && !finalVisible; barra.classList.toggle('ver', ver); document.body.classList.toggle('con-barra', ver) }
+    new IntersectionObserver(function (es) { heroVisible = es[0].isIntersecting; pinta() }).observe(heroBtn)
+    new IntersectionObserver(function (es) { finalVisible = es[0].isIntersecting; pinta() }).observe(final)
+  }
+
+
+  // ---------- El átomo vivo: el logo de SmartVente en 3D, siguiendo el cursor ----------
+  ;(function () {
+    var cv = document.getElementById('atomo'); if (!cv || !cv.getContext) return
+    var ctx = cv.getContext('2d'), wrap = document.getElementById('atomo-wrap')
+    var chips = [document.getElementById('chip-a'), document.getElementById('chip-b'), document.getElementById('chip-c')]
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    var W = 0, H = 0, dpr = Math.min(2, devicePixelRatio || 1)
+    var rotX = -0.42, rotY = 0.35, tgtX = -0.42, tgtY = 0.35, t0 = performance.now(), visible = true, raf = 0
+    function size () { var r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0) }
+    size(); addEventListener('resize', size)
+    // Proyección simple: rota (x,y,z) y aplica perspectiva
+    function proj (x, y, z) {
+      var cy = Math.cos(rotY), sy = Math.sin(rotY), cx = Math.cos(rotX), sx = Math.sin(rotX)
+      var x1 = x * cy + z * sy, z1 = -x * sy + z * cy
+      var y1 = y * cx - z1 * sx, z2 = y * sx + z1 * cx
+      var f = 900 / (900 - z2 * 0.9)
+      return { x: W / 2 + x1 * f, y: H / 2 + y1 * f, z: z2, f: f }
+    }
+    // Las órbitas del logo: la horizontal (rx 54, ry 21.5) y la vertical (rx 21.5, ry 54), llevadas a 3D como dos anillos
+    var R = 0, N = 120
+    function anillo (plano, s, col, lw) {
+      var pts = []
+      for (var i = 0; i <= N; i++) { var a = i / N * Math.PI * 2, c = Math.cos(a) * R, sn = Math.sin(a) * R
+        pts.push(plano === 'h' ? proj(c, 0, sn) : plano === 'v' ? proj(0, c, sn) : proj(c, sn, 0)) }
+      // mitad trasera más tenue
+      for (var k = 0; k < 2; k++) { ctx.beginPath(); var on = false
+        for (var j = 0; j < pts.length; j++) { var q = pts[j], back = q.z < 0
+          if ((k === 0) === back) { if (!on) { ctx.moveTo(q.x, q.y); on = true } else ctx.lineTo(q.x, q.y) } else on = false }
+        ctx.strokeStyle = col; ctx.globalAlpha = k === 0 ? 0.35 : 1; ctx.lineWidth = lw; ctx.stroke(); ctx.globalAlpha = 1 }
+    }
+    function satelite (plano, a, r, col) { var c = Math.cos(a) * R, s = Math.sin(a) * R
+      var q = plano === 'h' ? proj(c, 0, s) : proj(0, c, s)
+      ctx.beginPath(); ctx.arc(q.x, q.y, r * q.f, 0, Math.PI * 2); ctx.fillStyle = col; ctx.globalAlpha = q.z < 0 ? .55 : 1; ctx.fill(); ctx.globalAlpha = 1
+      // estela corta
+      ctx.beginPath(); for (var i = 1; i <= 14; i++) { var b = a - i * 0.045, cc = Math.cos(b) * R, ss = Math.sin(b) * R, p = plano === 'h' ? proj(cc, 0, ss) : proj(0, cc, ss); i === 1 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y) }
+      ctx.strokeStyle = col; ctx.lineWidth = r * .9; ctx.lineCap = 'round'; ctx.globalAlpha = .25; ctx.stroke(); ctx.globalAlpha = 1
+      return q }
+    function chip (el, q) { if (!el) return; el.style.left = q.x + 'px'; el.style.top = (q.y - 34) + 'px'; el.classList.toggle('ver', q.z > 10) }
+    function frame (now) {
+      if (!visible) return
+      var tt = (now - t0) / 1000
+      R = Math.min(W, H) * 0.36
+      rotX += (tgtX - rotX) * 0.06; rotY += (tgtY - rotY) * 0.06
+      var auto = reduce ? 0 : tt * 0.12
+      ctx.clearRect(0, 0, W, H)
+      // anillo del fondo: la silueta del cuadro del logo, muy tenue
+      ctx.beginPath(); ctx.arc(W / 2, H / 2, R * 1.32, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(155,91,255,.14)'; ctx.lineWidth = 1; ctx.stroke()
+      var save = rotY; rotY = save + auto
+      // halo del núcleo
+      var g = ctx.createRadialGradient(W / 2, H / 2, R * .1, W / 2, H / 2, R * .9); g.addColorStop(0, 'rgba(155,91,255,.28)'); g.addColorStop(1, 'rgba(155,91,255,0)')
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H)
+      anillo('h', 0, 'rgba(196,168,255,.95)', 1.8)
+      anillo('v', 0, 'rgba(196,168,255,.95)', 1.8)
+      // núcleo: el anillo del logo
+      ctx.beginPath(); ctx.arc(W / 2, H / 2, R * 0.16, 0, Math.PI * 2); ctx.strokeStyle = '#9b5bff'; ctx.lineWidth = R * 0.12; ctx.stroke()
+      ctx.beginPath(); ctx.arc(W / 2, H / 2, R * 0.05, 0, Math.PI * 2); ctx.fillStyle = '#f7f6fb'; ctx.fill()
+      // tres satélites: la factura, el margen y las ventas
+      var sp = reduce ? 0 : tt
+      chip(chips[0], satelite('h', 1.2 + sp * 0.9, R * 0.085, '#f6f5f8'))
+      chip(chips[1], satelite('v', 2.6 - sp * 0.7, R * 0.085, '#ff5a2a'))
+      chip(chips[2], satelite('h', 4.3 + sp * 0.9, R * 0.07, '#c4a8ff'))
+      rotY = save
+      raf = requestAnimationFrame(frame)
+    }
+    // Sigue el cursor; y se puede agarrar y girar con el dedo o el mouse, con inercia
+    var arrastrando = false, lx = 0, ly = 0, vx = 0, vy = 0, giroX = 0, giroY = 0
+    function onMove (e) { if (arrastrando || !matchMedia('(hover: hover)').matches) return
+      var r = wrap.getBoundingClientRect(); var px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5
+      tgtY = 0.35 + px * 1.1 + giroY; tgtX = -0.42 - py * 0.9 + giroX }
+    cv.addEventListener('pointerdown', function (e) { arrastrando = true; lx = e.clientX; ly = e.clientY; vx = vy = 0; cv.setPointerCapture(e.pointerId); cv.style.cursor = 'grabbing' })
+    cv.addEventListener('pointermove', function (e) { if (!arrastrando) return; vx = (e.clientX - lx) * 0.008; vy = (e.clientY - ly) * 0.008; giroY += vx; giroX -= vy; tgtY += vx; tgtX -= vy; lx = e.clientX; ly = e.clientY })
+    function suelta () { arrastrando = false; cv.style.cursor = 'grab'; (function inercia () { if (arrastrando || (Math.abs(vx) < .0005 && Math.abs(vy) < .0005)) return; giroY += vx; giroX -= vy; tgtY += vx; tgtX -= vy; vx *= .94; vy *= .94; requestAnimationFrame(inercia) })() }
+    cv.addEventListener('pointerup', suelta); cv.addEventListener('pointercancel', suelta); cv.style.cursor = 'grab'; cv.style.touchAction = 'none'
+    if (!reduce) { addEventListener('pointermove', onMove, { passive: true }) }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame) } }).observe(cv)
+    raf = requestAnimationFrame(frame)
+  })()
+
+  // ---------- Historia del producto: el celular fijo cambia de pantalla ----------
+  ;(function () {
+    var pantallas = document.querySelectorAll('.phone-fijo .pantalla'), pasos = document.querySelectorAll('.paso-h')
+    if (!pantallas.length) return
+    function activa (n) { pantallas.forEach(function (s, i) { s.classList.toggle('activa', i === n) }) }
+    activa(0)
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) activa(+e.target.dataset.paso) }) }, { rootMargin: '-45% 0px -45% 0px' })
+      pasos.forEach(function (p) { io.observe(p) })
+    }
+  })()
+
+  // ---------- Luz que sigue el cursor en las secciones oscuras ----------
+  if (matchMedia('(hover: hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.hero, .oscuro').forEach(function (s) {
+      s.addEventListener('pointermove', function (e) { var r = s.getBoundingClientRect(); s.style.setProperty('--mx', (e.clientX - r.left) + 'px'); s.style.setProperty('--my', (e.clientY - r.top) + 'px'); s.classList.add('luz') }, { passive: true })
+      s.addEventListener('pointerleave', function () { s.classList.remove('luz') })
+    })
+    // Botones magnéticos: se inclinan hacia el cursor
+    document.querySelectorAll('.btn-wa').forEach(function (b) {
+      b.classList.add('magnetico')
+      b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); b.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * .18) + 'px,' + ((e.clientY - r.top - r.height / 2) * .3) + 'px)' })
+      b.addEventListener('pointerleave', function () { b.style.transform = '' })
+    })
+  }
+
+  // ---------- Lo que ningún Excel: 9 botones, con rotación automática hasta que el visitante toca ----------
+  ;(function () {
+    var bots = document.querySelectorAll('.botones button'); if (!bots.length) return
+    var panel = document.getElementById('ex-p'), tt = document.getElementById('ex-t'), dd = document.getElementById('ex-d'), tag = document.getElementById('ex-tag'), mm = document.getElementById('ex-m')
+    var D = [
+      ['Conteo físico a ciegas', '', 'Tu equipo cuenta el inventario sin ver cuánto debería haber. Los faltantes salen a la luz de verdad.', '<div class="row"><b>Conteo de cierre · cocina</b><span>hoy</span></div><div class="row"><span>Queso mozzarella</span><span>contado: 4,2 kg · <b class="al">faltan 0,8 kg</b></span></div><div class="row"><span>Tomate chonto</span><span>contado: 9,8 kg · <b class="ok">cuadra</b></span></div><div class="row"><span>Aceite girasol</span><span>contado: 3 L · <b class="ok">cuadra</b></span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Contabilidad integrada', 'Módulo · $60.000 al mes por sede', 'Asientos automáticos de ventas, compras, gastos y pagos, retenciones, terceros y reportes de exógena. Tu contador recibe todo listo.', '<div class="row"><b>Asientos de hoy</b><span>42</span></div><div class="row"><span>Ventas del turno</span><span>$4.280.000</span></div><div class="row"><span>Compra Dist. El Prado</span><span>$297.200</span></div><div class="row"><span>Retención en la fuente</span><span>$7.430</span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Gastos del negocio y del dueño', '', 'Cada gasto dice si es del restaurante o del propietario, y si es deducible. Nunca más plata mezclada.', '<div class="row"><b>Gastos de la semana</b><span>5</span></div><div class="row"><span>Gas · Gases del Valle</span><span>restaurante · <b class="ok">deducible</b></span></div><div class="row"><span>Mercado de la casa</span><span><b class="al">del dueño</b></span></div><div class="row"><span>Aseo · Surtitodo</span><span>restaurante · <b class="ok">deducible</b></span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Pedido vs. factura', 'Plan Completo', 'Compara lo que le pediste al proveedor con lo que te llegó y te facturó, línea por línea. Sin inventario duplicado.', '<div class="row"><b>Pedido 118 · Lácteos Sur</b><span>factura 4821</span></div><div class="row"><span>Queso mozzarella</span><span>pedido 5 kg · llegó 5 kg · <b class="ok">ok</b></span></div><div class="row"><span>Crema de leche</span><span>pedido 4 L · llegó 3 L · <b class="al">falta 1 L</b></span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Proveedores y cuentas por pagar', 'Plan Completo', 'Compras a crédito, abonos, vencimientos y comprobantes de egreso. Sabes cuánto debes y a quién.', '<div class="row"><b>Por pagar</b><span>$1.240.000</span></div><div class="row"><span>Dist. El Prado</span><span>vence en 3 días · $297.200</span></div><div class="row"><span>Lácteos Sur</span><span>vence en 9 días · $942.800</span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Se cae el internet, tu caja no', '', 'La información vive en el computador de tu local: sigues vendiendo, y lo pendiente se envía cuando vuelve la conexión.', '<div class="row"><b>Estado</b><span class="al">sin internet</span></div><div class="row"><span>Ventas en el turno</span><span>23 · <b class="ok">guardadas en tu PC</b></span></div><div class="row"><span>Facturas electrónicas</span><span>4 pendientes de enviar</span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Menú digital y domicilios propios', 'SmartCarte, producto aparte', 'Con SmartCarte tus clientes piden desde tu menú digital y los pedidos y domicilios propios llegan directo a SmartVente, sin volver a digitarlos.', '<div class="row"><b>Pedido web #204</b><span>hace 2 min</span></div><div class="row"><span>2 hamburguesas clásicas</span><span>$52.000</span></div><div class="row"><span>Pago por QR</span><span class="ok">confirmado</span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Rappi y DiDi en tu misma caja', 'Módulo · $40.000 al mes por sede', 'Si vendes por las apps de domicilios, esos pedidos llegan a SmartVente y a cocina, en la misma caja.', '<div class="row"><b>Pedidos de apps · hoy</b><span>17</span></div><div class="row"><span>Rappi #88213</span><span>en cocina</span></div><div class="row"><span>DiDi #4410</span><span class="ok">entregado</span></div><div class="nota-m">Cifras de ejemplo</div>'],
+      ['Precios por cliente y crédito', 'Plan Completo', 'Listas de precios para clientes especiales y ventas a crédito con su cartera y abonos.', '<div class="row"><b>Empresa Los Robles</b><span>lista corporativa</span></div><div class="row"><span>Almuerzo ejecutivo</span><span>$18.000 (en carta $22.000)</span></div><div class="row"><span>Cartera</span><span>$640.000 · abono el 15</span></div><div class="nota-m">Cifras de ejemplo</div>']
+    ]
+    var actual = 0, timer = 0, reanuda = 0, auto = true
+    function muestra (i) { actual = i; var d = D[i]
+      bots.forEach(function (b, k) { b.setAttribute('aria-selected', k === i ? 'true' : 'false'); b.tabIndex = k === i ? 0 : -1 })
+      var inner = panel.querySelector('.panel-in'); inner.style.animation = 'none'; void inner.offsetWidth; inner.style.animation = ''
+      tt.textContent = d[0]; tag.textContent = d[1]; dd.textContent = d[2]; mm.innerHTML = d[3]
+      var vc = inner.querySelector('.vc'); if (vc) vc.remove()
+      var lg = inner.querySelector('.logo-carte'); if (lg) lg.remove()
+      if (i === 6) { inner.insertAdjacentHTML('afterbegin', '<svg class="logo-anim logo-carte" viewBox="0 0 146 146" role="img" aria-label="SmartCarte"><rect width="146" height="146" rx="16" fill="#D9B23A"/><g class="o1" fill="none"><ellipse cx="73" cy="73" rx="54" ry="21.5" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="127" cy="73" r="6" fill="#0d0d0d"/></g><g class="o2" fill="none"><ellipse cx="73" cy="73" rx="21.5" ry="54" stroke="#0d0d0d" stroke-opacity=".4" stroke-width="1.45"/><circle cx="73" cy="19" r="6" fill="#0d0d0d"/></g><circle cx="73" cy="73" r="8" fill="none" stroke="#0d0d0d" stroke-width="7"/></svg>') }
+      if (i === 6) { dd.insertAdjacentHTML('afterend', '<a class="enlace-carte vc" href="https://smartcarte.co" target="_blank" rel="noopener">Conocer SmartCarte →</a>') }
+      var b = panel.querySelector('.barra-tiempo i'); b.style.animation = 'none'; void b.offsetWidth; b.style.animation = ''
+    }
+    function programa () { clearTimeout(timer); if (!auto) return; panel.classList.add('auto'); timer = setTimeout(function () { muestra((actual + 1) % D.length); programa() }, 6000) }
+    bots.forEach(function (b) {
+      b.addEventListener('click', function () { auto = false; panel.classList.remove('auto'); clearTimeout(timer); muestra(+b.dataset.i); clearTimeout(reanuda); reanuda = setTimeout(function () { auto = true; programa() }, 15000) })
+      b.addEventListener('keydown', function (e) { var n = +b.dataset.i; if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); bots[(n + 1) % bots.length].focus(); bots[(n + 1) % bots.length].click() } if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); bots[(n + bots.length - 1) % bots.length].focus(); bots[(n + bots.length - 1) % bots.length].click() } })
+    })
+    muestra(0)
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { if (es[0].isIntersecting) programa(); else clearTimeout(timer) }).observe(panel)
+    }
+  })()
+
+  // ---------- El flujo de la plata: cada paso se abre al tocar ----------
+  document.querySelectorAll('.flujo li > button').forEach(function (b) {
+    b.addEventListener('click', function () { abreFlujo(b) })
+  })
+  function abreFlujo (b) { var det = document.getElementById('flujo-detalle'), li = b.parentElement
+    document.querySelectorAll('.flujo li.abierto').forEach(function (o) { o.classList.remove('abierto'); o.querySelector('button').setAttribute('aria-expanded', 'false') })
+    li.classList.add('abierto'); b.setAttribute('aria-expanded', 'true')
+    det.style.animation = 'none'; void det.offsetWidth; det.style.animation = ''
+    det.innerHTML = '<b>' + b.querySelector('b').textContent + '.</b> ' + li.querySelector('.mas').textContent }
+  var primeroF = document.querySelector('.flujo li > button'); if (primeroF) abreFlujo(primeroF)
+
+  // ---------- La cifra de la calculadora cuenta hasta el total ----------
+  function cuenta (el, hasta) { var desde = +(el.dataset.valor || 0), t0 = performance.now(), dur = 420
+    el.dataset.valor = hasta
+    ;if (matchMedia('(prefers-reduced-motion: reduce)').matches) { el.innerHTML = cop(hasta) + ' <small>/ mes</small>'; return }
+    (function paso (now) { var k = Math.min(1, (now - t0) / dur); k = 1 - Math.pow(1 - k, 3)
+      el.innerHTML = cop(desde + (hasta - desde) * k) + ' <small>/ mes</small>'; if (k < 1) requestAnimationFrame(paso) })(t0) }
+  ;
+
+  // Calculadora: precios publicados en esta misma página.
+  var PRECIO = { esencial: 150000, completo: 200000 }, MOD = { contabilidad: 60000, domicilios: 40000 }
+  var sedes = 1
+  function cop (n) { return '$' + Math.round(n).toLocaleString('es-CO') }
+  function calcula () {
+    var plan = document.querySelector('input[name=plan]:checked').value
+    var mods = Array.prototype.map.call(document.querySelectorAll('input[name=mod]:checked'), function (i) { return i.value })
+    var aviso = ''
+    if (sedes > 1 && plan === 'esencial') { plan = 'completo'; document.querySelector('input[value=completo]').checked = true; aviso = 'Varias sedes requieren el plan Completo.' }
+    if (mods.indexOf('contabilidad') >= 0 && plan === 'esencial') { plan = 'completo'; document.querySelector('input[value=completo]').checked = true; aviso = 'Contabilidad requiere el plan Completo.' }
+    var base = PRECIO[plan], extra = Math.max(0, sedes - 1)
+    var planTotal = base + extra * base * 0.8
+    var modTotal = mods.reduce(function (s, m) { return s + MOD[m] * sedes }, 0)
+    var lineas = ['Plan ' + (plan === 'completo' ? 'Completo' : 'Esencial') + ': ' + cop(base) + ' × 1 sede']
+    if (extra) lineas.push(extra + ' sede' + (extra > 1 ? 's' : '') + ' adicional' + (extra > 1 ? 'es' : '') + ' con −20%: ' + cop(extra * base * 0.8))
+    mods.forEach(function (m) { lineas.push((m === 'contabilidad' ? 'Contabilidad' : 'Rappi y DiDi') + ': ' + cop(MOD[m]) + (sedes > 1 ? ' × ' + sedes + ' sedes' : '')) })
+    cuenta(document.getElementById('total'), planTotal + modTotal)
+    document.getElementById('desglose').innerHTML = lineas.map(function (l) { return '<span>' + l + '</span>' }).join('')
+    document.getElementById('aviso').textContent = aviso
+    document.getElementById('n-sedes').textContent = sedes + (sedes === 1 ? ' sede' : ' sedes')
+  }
+  document.querySelectorAll('.calc input').forEach(function (i) { i.addEventListener('change', calcula) })
+  document.getElementById('mas').addEventListener('click', function () { sedes = Math.min(10, sedes + 1); calcula() })
+  document.getElementById('menos').addEventListener('click', function () { sedes = Math.max(1, sedes - 1); calcula() })
+  calcula()
 </script>
 </body>
 </html>
